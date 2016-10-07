@@ -13,8 +13,8 @@ pages:
   - 'Dokumentation':
     - 'Compute': 'dokumentation/compute.md'
     - 'Networking': 'dokumentation/networking.md'
-#    - 'Block Storage': 'dokumentation/block-storage.md'
-#    - 'Object Storage': 'dokumentation/object-storage.md'
+    - 'Block Storage': 'dokumentation/block-storage.md'
+    - 'Object Storage': 'dokumentation/object-storage.md'
     - 'Orchestration': 'dokumentation/orchestration.md'
 
 copyright: SysEleven Stack is made with ♥ in Berlin.

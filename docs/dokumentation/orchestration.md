@@ -1,6 +1,10 @@
-#SysEleven Stack Orchestration Service
+# SysEleven Stack Orchestration Service
 
 [TOC]
+
+Der SysEleven Stack Orchestration Service basiert auf dem OpenStack Heat Projekt.
+
+Sowohl via unserer öffentlichen OpenStack API, als auch durch das SysEleven Stack Dashboard können Stacks verwaltet werden.
 
 Die Kontrolle, die der SysElevenStack dem Nutzer bietet, geht weit über das
 Starten und Stoppen einer virtuellen Maschine hinaus. Der Nutzer des SysEleven
@@ -573,3 +577,41 @@ outputs:
     description: Floating IP address of loadbalancer in public network
     value: { get_attr: [ loadbalancer_floating_ip, floating_ip_address ] }
 ```
+
+## FAQ
+
+### Ich benutze ein Ubuntu ab 15.xx und es fehlt die Default Route
+
+Ubuntu benutzt seit 15.04 eine RFC-konforme Implementierung von DHCP. Das Software Defined Network schickt keine Default Route mit, daher muss diese explizit mit host_routes gesetzt werden. Wir arbeiten mit dem Hersteller an einer Lösung. Mit der folgenden Konfiguration kann das Problem umgangen werden. Hier ein Beispiel für das Subnet 10.0.0.0/24 mit 10.0.0.1 als Standard Gateway:
+
+```
+  subnet:
+    type: OS::Neutron::Subnet
+    properties:
+      name: kickstart-subnet
+      dns_nameservers:
+        - 37.123.105.116
+        - 37.123.105.117
+      network_id: {get_resource: net}
+      ip_version: 4
+      host_routes:
+        - { destination: 0.0.0.0/0, nexthop: 10.0.0.1 }
+      gateway_ip: 10.0.0.1
+      cidr: 10.0.0.0/24
+      allocation_pools:
+      - {start: 10.0.0.10, end: 10.0.0.250}
+```
+
+### Mein Stack lässt sich nicht mehr löschen! Was kann ich tun?
+
+Ein Heat-Stack folgt beim Aufbau Abhängigkeiten, die Objekte untereinander in eine bestimmte Reihenfolge bringen. Die Dependencies werden beim Rückbau eines Stack ebenfalls berücksichtigt, so dass man ein Fehlschlagen des Löschens damit umgehen kann. Ist ein Stack ohne Angabe der Dependencies aufgebaut, schlägt das Löschen gerne mit einer Fehlermeldung wie dieser Fehl:
+
+```
+Resource DELETE failed: Conflict: resources.router_subnet_connect: Router interface for subnet eaa5a91f-3f45-43cf-8714-95118aabc64c on router 487a984c-692c-4d45-80d2-2e0ee92b505d cannot be deleted, as it is required by one or more floating IPs. 
+```
+
+In diesem Fall ist die saubere Lösung, die Abhängigkeiten von Hand zu löschen. Also erst die Floating-IP, die an dem Router hängt, dann den Router selbst und danach den ganzen Stack. Oft reicht es auch, den ``heat stack-delete <stackName>`` mehrfach aufzurufen.
+Die Angabe im Heat-Template ``depends_on: <myOtherResourceID>`` vermeidet diese Probleme.
+
+
+
