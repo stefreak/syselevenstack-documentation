@@ -1,0 +1,140 @@
+[TOC]
+
+# Welche Voraussetzungen müssen erfüllt sein?
+
+Vorraussetzung, um mit der API des SysEleven Stack zu arbeiten, sind die
+OpenStack-Commandline Utils. Als Anwender hat man die Wahl: entweder, man
+installiert sich die Clients lokal auf seinem Arbeitsrechner, oder man richtet
+sich einen virtuellen Rechner ein, auf dem alle Tools vorinstalliert sind, um 
+mit der API des SysEleven Stacks zu arbeiten. Für diesen Leitfaden wählen wir die zweite
+Möglichkeit, damit wir von einer definierten Umgebung ausgehen können.
+
+Wer sich die Clients lokal installieren möchte, folgt der [offiziellen Anleitung des OpenStack-Projekts](http://docs.openstack.org/user-guide/common/cli_install_openstack_command_line_clients.html).
+
+# Erste Schritte und Installation unseres Tool-Hosts:
+
+Mit den von SysEleven erhaltenen Daten für Nutzername und Passwort loggen wir
+uns ein unter https://dashboard.cloud.syseleven.net
+
+*    Als ersten Schritt hinterlegen wir unseren Public-SSH-Key in der
+   Weboberfläche von OpenStack. Das ermöglicht uns, diesen Key automatisiert in
+   virtuellen Maschinen zu hinterlegen und so Zugriff auf diese Maschinen zu
+   erhalten. Falls die Spracheinstellungen der Weboberfläche auf Deutsch stehen, sollten wir sie auf
+   Englisch umstellen, damit die hier genutzten Begriffe einheitlich sind. Das
+   können wir tun, indem wir rechts oben auf unseren Nutzernamen klicken und in
+   den Nutzereinstellungen Englisch auswählen. 
+   Um einen SSH-Key zu hinterlegen, bewegen wir uns in der Weboberfläche in dem Reiter "Compute"
+   zu "Access and Security" und dort zu dem Bereich "Key Pairs". Dort wählen wir "Import Key Pair" aus, wählen einen 
+   Namen (den wir uns für die spätere Verwendung merken) und importieren per Copy & Paste unseren 
+   öffentlichen SSH-Schlüssel. 
+
+*    Wir besorgen uns ein Template für eine virtuelle Maschine, die uns alle
+   benötigten Tools für die Arbeit in OpenStack bereit stellt. Das Template
+   liegt veröffentlich auf 
+   [Github:](https://raw.githubusercontent.com/syseleven/heattemplates-examples/master/gettingStarted/sysElevenStackKickstart.yaml)
+   Die URL des Templates kopieren wir uns aus dem Browser, um sie gleich in der Openstack-Weboberfläche zur Verfügung zu haben.
+
+*    Unter *Orchestration --> Stacks --> Launch Stack* können wir unser Template
+   starten. Dafür klicken wir auf *URL* und fügen per Copy und Paste
+   unser die URL des Templates ein. Das Feld *Environment Source* belassen wir auf den Voreinstellungen und klicken auf "next".
+   Als Name wählen wir *Toolbox*, für
+   *Creation Timeout* geben wir eine Minute an. Das "Password"-Feld ist an dieser Stelle irrelevant, muss aber mit beliebigem Text befüllt werden. 
+   Als Parameter "key_name" geben wir den Namen an, den wir unserem öffentlichen SSH-Schlüssel vergeben haben.
+   Danach klicken wir "Launch" und unsere erste Maschine startet.
+
+*    Wir loggen uns per SSH in unsere Maschine zum ersten Test ein. Dafür müssen
+   wir die öffentliche IP wissen, die uns im SysEleven Stack vergeben wurde,
+   diese sehen wir unter *Compute* --> *Instances* bei einem Klick auf unsere
+   neu gebauten Maschine. Der voreingerichtete Username lautet
+   `syseleven`, d.h. mit folgendem Befehl können wir den Zugriff auf
+   unsere Maschine unter Mac und Linux in einem Terminal testen:
+
+```
+ssh syseleven@<meineIP-Adresse>
+```
+
+Erhalte ich daraufhin die Warnung, `REMOTE HOST HAS CHANGED!`, deutet das
+  daraufhin, dass unter dieser IP früher eine andere Maschine erreichbar war als
+  die jetzige. Das ist im SysEleven Stack normal, da wir ständig Maschinen neu
+  bauen und wieder löschen. Die verwendeten IP-Adressen werden daher ständig
+  wiederverwendet, so dass diese Meldung häufig auftritt. Fürs erste ist der
+  Umgang mit dieser Fehlermeldung einfach: wir revoken die für diese IP
+  hinterlegten Schlüssel mit dem folgenden Kommando:
+
+```
+ssh-keygen -R <meineIP-Adresse>
+```
+
+*    Daraufhin können wir uns in die Maschine einloggen. Erhalte ich die Meldung
+  "Connection refused", kann es sein, dass die virtuelle Maschine noch nicht ganz
+  hoch gefahren ist. Wenn nach ca. 2 Minuten noch kein Login möglich ist, kann
+  ich mich unter Angabe der öffentlichen IP der Maschine an den SysEleven Support
+  wenden.
+
+     Wir Testen, ob die automatische Installation der OpenStack-Tools geklappt hat,
+ indem wir auf dem erstellten Server ein 
+
+```
+openstack --help
+```
+
+aufrufen.
+
+Erhalten wir eine Reihe von Optionen zur Bedienung von Nova als Ausgabe, war
+die Installation erfolgreich. Wenn nicht, bitten wir den Support von SysEleven
+unter Angabe des Heat-Templates um Hilfe.
+
+Damit sind wir prinzipiell arbeitsfähig, was nun noch fehlt ist die
+Authentifizierung gegen die API des SysEleven Stacks. Im Home-Verzeichnis des
+syselevenstack Users liegt dafür eine vorbereitete Datei namens „openrc“. In
+dieser Datei tauschen wir die Werte für `tenant_name`, `user_name` und
+`user_password` aus mit den von SysEleven erhaltenen Zugangsdaten. 
+
+Ist die Datei auf meiner virtuellen Maschine abgeändert, benutzen wir sie, um
+die Umgebungsvariablen zu setzen, über die meine OpenStack-Tools die richtigen
+API-Endpunkte kennen, den Usernamen, das Projekt, in dem ich arbeite, sowie das
+Passwort, mit dem der Zugriff auf die API ermöglicht wird. Der nötige Befehl
+dazu ist kurz:
+
+```
+source openrc
+```
+
+Ist das erfolgreich geschehen, kann ich mit dem SysEleven Stack arbeiten. Ein
+erster Test kann durchgeführt werden, indem man sich die aktuell gestarteten
+Stacks anzeigen lässt:
+
+```
+openstack stack list
+```
+
+Als erwartetes Ergebnis sollte dort der Stack mit dem Namen "Toolbox"
+aufgelistet sein.
+
+
+## Weiterführende Beispiele
+Als nächsten Schritt können wir die Sammlung an Heat-Templates, die für 
+den SysEleven Stack getestet und auf Github veröffentlich sind, austesten.
+Ein Beispielhafter Ablauf sähe so aus:
+
+```
+git clone https://github.com/syseleven/heattemplates-examples.git
+cd heattemplates-examples
+cd example-project
+openstack stack create -t syseleven.yaml <myStackName>
+```
+
+Der Name des Stacks ist frei wählbar, darf allerdings nicht mit einer Zahl beginnen.
+Mittels 
+```
+openstack stack resource list <stackName>
+```
+können wir zuschauen, welche Ressource gerade gebaut wird. Zum visualisieren des
+Ergebnisses eignet sich die Weboberfläche; insbesondere "Network Topology" ist eine 
+aufschlussreiche Ansicht.
+
+Daraufhin wird ein Setup mit mehreren virtuellen Maschinen (Loadbalancer, Webservern und Datenbankserver) 
+gebaut. Die Server werden mittels "Cloud-Init" provisioniert und mit einer Beispielanwendung ausgestattet.
+Ist der Stack erfolgreich gebaut, kann die IP des Loadbalancers im Webbrowser eingegeben werden und die
+Beispielanwendung wird gezeigt. Erscheint die Nginx-Default-Webseite, ist das Deployment noch nicht fertig. Ein Reload
+einige Zeit später zeigt dann die fertige Webanwendung.
