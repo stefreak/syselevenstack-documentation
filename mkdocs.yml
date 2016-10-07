@@ -1,6 +1,8 @@
 site_name: SysEleven Stack Documentation
 theme: yeti
 google_analytics: ['UA-4634575-5', 'doc.cloud.syseleven.net']
+repo_name: "GitHub"
+repo_url: "https://github.com/syseleven/syselevenstack-documentation"
 
 pages:
   - index.md
