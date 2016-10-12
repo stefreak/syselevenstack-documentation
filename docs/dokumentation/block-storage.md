@@ -24,4 +24,4 @@ Grundsätzlich gibt es mehrere Möglichkeiten, u.a.:
 
 Wir haben ein Beispiel für einen NFS-Server mit mehreren NFS-Clients, die sich automatisch mit diesem verbinden unter folgendem Link bereitgestellt, welcher mit unserem Orchestration Service verwendet werden kann: 
 
-https://github.com/syseleven/heattemplates-examples/tree/master/sharedVolume
+[https://github.com/syseleven/heattemplates-examples/tree/master/sharedVolume](https://github.com/syseleven/heattemplates-examples/tree/master/sharedVolume)
