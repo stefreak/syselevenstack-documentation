@@ -1,5 +1,5 @@
 site_name: SysEleven Stack Documentation
-theme: yeti
+theme_dir: custom_yeti_theme
 google_analytics: ['UA-4634575-5', 'doc.cloud.syseleven.net']
 repo_name: "GitHub"
 repo_url: "https://github.com/syseleven/syselevenstack-documentation"
@@ -16,5 +16,5 @@ pages:
     - 'Object Storage': 'dokumentation/object-storage.md'
     - 'Orchestration': 'dokumentation/orchestration.md'
 
-copyright: SysEleven Stack is made with ♥ in Berlin.
-    For further questions, don't hesitate to contact us at cloudsupport@syseleven.de
+copyright: SysEleven Stack is made with ♥ in Berlin.<br/>
+    For further questions, don't hesitate to contact us at <a href="mailto:cloudsupport@syseleven.de">cloudsupport@syseleven.de</a>
