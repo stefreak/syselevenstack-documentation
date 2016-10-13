@@ -4,9 +4,19 @@
 
 ## Übersicht
 
-SysEleven Stacks Object Service stellt einen S3 kompatiblen Object Storage dar.
+SysEleven Stacks Object Storage Service stellt einen S3 kompatiblen Object Storage dar.
 
 Die OpenStack API kann genutzt werden um Credentials für unseren Object Storage zu erstellen. Die S3 API kann mit diversen S3 Clients und SDKs angesprochen werden.
+
+### Buckets
+
+Buckets sind die logische Organisationseinheit unter der Objekte im SysEleven Stack Object Storage gespeichert werden.
+Der Name eines Buckets ist im SysEleven Stack einmalig und damit eindeutig.
+
+### Objects
+
+Der SysEleven Stack Object Storage Service ist im Prinzip ein großer Key/Value Storage.
+Eine Datei oder Datenobject können einem Key wie einem Dateinamen zugewiesen werden und unter diesem im Object Storage abgelegt und verfügbar gemacht werden.
 
 ## FAQ
 
