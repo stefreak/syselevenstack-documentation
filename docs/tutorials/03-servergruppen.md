@@ -53,7 +53,7 @@ resources:
 
 ```
 
-Wie man sihet, werden Server und Ports jeweils zwei mal beschrieben. Das wird spätestens dann lästig, wenn Setups mehrere dutzend gleiche Server beinhalten. Bequemer ist es, wenn man die Server in Gruppen organisiert und die Beschreibung in eine eigene Datei auslagert, die dann den Server nur einmal beschreibt.
+Wie man sieht, werden Server und Ports jeweils zwei mal beschrieben. Das wird spätestens dann lästig, wenn Setups mehrere dutzend gleiche Server beinhalten. Bequemer ist es, wenn man die Server in Gruppen organisiert und die Beschreibung in eine eigene Datei auslagert, die dann den Server nur einmal beschreibt.
 
 ## Der elegante Weg: Gruppieren von Servern
 
