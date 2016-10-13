@@ -5,15 +5,15 @@
 ## Infrastrukturtemplates vereinfachen mit ResourceGroups
 
 * In diesem Tutorial wird gezeigt, wie Server in Gruppen zusammengefasst werden.
-* Die Anzahl gleicher Server kann so über Parameter gesteuert werden-
+* Die Anzahl gleicher Server kann so über Parameter gesteuert werden
 
 ## Vorraussetzungen 
 
 * Der Umgang mit den OpenStack CLI-Tools wird als bekannt vorrausgesetzt.
 
-## Wie es nicht skaliert: jeder Server wird einzeln definiert
+## Wie es *nicht* sein sollte: redundanter Code
 
-Ein template, in dem mehr als ein Server gestartet wird, könnte so aussehen:
+Ein Template, in dem mehr als ein Server gestartet wird, könnte so aussehen:
 
 ```
 heat_template_version: 2014-10-16
@@ -95,7 +95,7 @@ resources:
 
 In diesem Beispiel werden zwei Server hintereinander auf die selbe Weise beschrieben. Diese mehrfache Arbeit kann man sich sparen, indem man die Server in Gruppen organisiert und die Beschreibung in eine eigene Datei auslagert, die dann den Server nur einmal beschreibt.
 
-## n-ter Schritt 
+## Der elegante Weg: Gruppieren von Servern
 
 Ein einfaches Szenario mit zwei gleichen Servern verteilt sich damit auf zwei Dateien, einmal die *setup.yaml*, in der alles außer meinen Servern beschrieben ist:
 
@@ -170,13 +170,13 @@ resources:
       network_id: { get_param: network_id }
 ```
 
-## Modularer Code
+## Ziel erreicht: Modularer Code
 
 Wir erreichen mit dieser Organisation mehrere Vorteile:
 
-* Unser Code ist modularisiert
-* Redundanz im Code wird vermieden
-* Wir haben einen automatisierten Index, den wir hier am Beispiel der Servernamen nutzen
+* Unser Code ist modularisiert.
+* Redundanz im Code wird vermieden.
+* Wir haben einen automatisch fortlaufenden Index, den wir hier am Beispiel der Servernamen nutzen.
 * Die Anzahl der Ressourcen in einer Gruppe lässt sich einfach in Parameter auslagern, so dass verschieden skalierte Setups aus der selben Code-Basis erstellt werden können.
 
  
