@@ -13,23 +13,13 @@
 
 ## Wie es *nicht* sein sollte: redundanter Code
 
-Ein Template, in dem mehr als ein Server gestartet wird, könnte so aussehen:
+Ein Template, in dem mehr als ein Server gestartet wird, könnte in Auszügen so aussehen:
 
 ```
 heat_template_version: 2014-10-16
-
-#
-# you can deploy this template using the following command:
-# 'openstack stack create -t example.yaml  <stackName>'
-#
-
-description: Simple template to deploy a single compute instance
-  without external network (login will be possible through vnc console).
-
-parameters:
- public_network_id:
-   type: string
-
+.
+.
+.
 resources:
   instance_one:
     type: OS::Nova::Server
@@ -61,43 +51,13 @@ resources:
     properties:
       network_id: { get_resource: example_net}
 
-  example_net:
-    type: OS::Neutron::Net
-    properties: 
-      name: example-net
-
-  example_subnet:
-    type: OS::Neutron::Subnet
-    properties:
-      name: example_subnet
-      dns_nameservers:
-        - 37.123.105.116
-        - 37.123.105.117
-      network_id: {get_resource: example_net}
-      ip_version: 4
-      cidr: 10.0.0.0/24
-      allocation_pools:
-      - {start: 10.0.0.10, end: 10.0.0.250}
-
-  example_router:
-    type: OS::Neutron::Router
-    properties:
-      external_gateway_info: {"network": { get_param: public_network_id }}
-
-  router_subnet_connect:
-    type: OS::Neutron::RouterInterface
-    depends_on: [ example_subnet, example_router, example_net ]
-    properties:
-      router_id: { get_resource: example_router }
-      subnet: { get_resource: example_subnet }
-
 ```
 
-In diesem Beispiel werden zwei Server hintereinander auf die selbe Weise beschrieben. Diese mehrfache Arbeit kann man sich sparen, indem man die Server in Gruppen organisiert und die Beschreibung in eine eigene Datei auslagert, die dann den Server nur einmal beschreibt.
+Wie man sihet, werden Server und Ports jeweils zwei mal beschrieben. Das wird spätestens dann lästig, wenn Setups mehrere dutzend gleiche Server beinhalten. Bequemer ist es, wenn man die Server in Gruppen organisiert und die Beschreibung in eine eigene Datei auslagert, die dann den Server nur einmal beschreibt.
 
 ## Der elegante Weg: Gruppieren von Servern
 
-Ein einfaches Szenario mit zwei gleichen Servern verteilt sich damit auf zwei Dateien, einmal die *setup.yaml*, in der alles außer meinen Servern beschrieben ist:
+Ein einfaches Szenario mit mehreren gleichen Servern verteilt sich damit auf zwei Dateien, einmal die *setup.yaml*, in der alles außer meinen Servern beschrieben ist:
 
 ```
 heat_template_version: 2014-10-16 
