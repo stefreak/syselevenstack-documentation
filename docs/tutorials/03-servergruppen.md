@@ -1,4 +1,4 @@
-# Resource Groups 
+# Resource Groups: vom Single-Server zu verteilten Setups 
 
 [TOC]
 
@@ -170,9 +170,9 @@ resources:
       network_id: { get_param: network_id }
 ```
 
-## Ziel erreicht: Modularer Code
+## Fazit: Modularer Code
 
-Wir erreichen mit dieser Organisation mehrere Vorteile:
+Wir erreichen so mehrere Vorteile:
 
 * Unser Code ist modularisiert.
 * Redundanz im Code wird vermieden.
