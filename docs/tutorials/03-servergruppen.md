@@ -9,7 +9,7 @@
 
 ## Vorraussetzungen 
 
-* Der Umgang mit den OpenStack CLI-Tools wird als bekannt vorrausgesetzt.
+* Der grundlegende Umgang mit den OpenStack CLI-Tools wird als bekannt vorrausgesetzt.
 
 ## Wie es *nicht* sein sollte: redundanter Code
 
