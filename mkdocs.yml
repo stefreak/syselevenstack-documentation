@@ -9,6 +9,7 @@ pages:
   - 'Tutorials': 
     - 'Erste Schritte': 'tutorials/01-firststeps.md'
     - 'API-Zugriff': 'tutorials/02-kickstart.md'
+    - 'Resource-Groups: Server in Gruppen organisieren': 'tutorials/03-servergruppen.md'
   - 'Dokumentation':
     - 'Compute': 'dokumentation/compute.md'
     - 'Networking': 'dokumentation/networking.md'
