@@ -11,6 +11,7 @@ pages:
     - 'API-Zugriff': 'tutorials/02-kickstart.md'
     - 'Server in Gruppen organisieren': 'tutorials/03-servergruppen.md'
     - 'Minimal CoreOS environment': 'tutorials/04-coreos.md'
+    - 'Stack-Ressourcen logisch aufeinander aufbauen': 'tutorials/05-dependencies.md'
   - 'Dokumentation':
     - 'Compute': 'dokumentation/compute.md'
     - 'Networking': 'dokumentation/networking.md'
