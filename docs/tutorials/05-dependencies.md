@@ -44,7 +44,7 @@ syselevenstack@kickstart:~/failingDemo$
 
 ## Die Lösung: saubere Definition der Reihenfolge
 
-In diesem Code-Beispiel geben wir eine saubere Kette an Abhängigkeiten an, so dass das Setup sauber hoch fährt und sich auch wieder problemlos löschen lässt:
+In einem Heat-Template werden Dependencies mittels `depends_on` definiert. 
 
 ```
 resources:
@@ -55,75 +55,8 @@ resources:
 
   syseleven_subnet:
     type: OS::Neutron::Subnet
-    depends_on: [ syseleven_net ]
-    properties:
-      name: syseleven_subnet
-      dns_nameservers:
-        - 37.123.105.116
-        - 37.123.105.117
-      network_id: {get_resource: syseleven_net}
-      ip_version: 4
-      cidr: 192.168.2.0/24
-      allocation_pools:
-      - {start: 192.168.2.10, end: 192.168.2.250}
+    depends_on: [ syseleven_net ] # <-- hiermit wird die Reihenfolge beim Anlegen und Löschen von Ressourcen sortiert.
 
-  syseleven_router:
-    type: OS::Neutron::Router
-    depends_on: [ syseleven_subnet ]
-    properties:
-      external_gateway_info: {"network": { get_param: public_network_id }}
-
-  router_subnet_connect:
-    type: OS::Neutron::RouterInterface
-    depends_on: [ syseleven_router ]
-    properties:
-      router_id: { get_resource: syseleven_router }
-      subnet: { get_resource: syseleven_subnet }
-
-  ### Nodes as resource group ###
-  #######################
-  node_group:
-    type: OS::Heat::ResourceGroup
-    depends_on: [ router_subnet_connect ]
-    properties:
-      count: 1 
-      resource_def: 
-        type: server.yaml
-        properties:
-          name: server%index%
-          image: { get_param: image }
-          flavor: { get_param: flavor_server }
-          syseleven_net: { get_resource: syseleven_net }
-          public_network_id: { get_param: public_network_id }
-
-```
-
-
-
-## Im Ergebnis sehen wir, dass der Stack nach genua unseren Vorgaben zusammengesetzt und gestartet wird:
-
-D.h. wir haben folgende Reihenfolge festgelegt:
-
-```
-   -----------------
-1.  syseleven_net
-   -----------------
-      |
-     -----------------
-2.    syseleven_subnet
-     -----------------
-        |
-       -----------------
-3.      syseleven_router
-       -----------------
-          |
-         -----------------
-4.        router_subnet_connect
-         -----------------
-            |
-           -----------------
-5.          node_group 
-           -----------------
 ```
 
 Über den openstack CLI Client gestartet lässt sich das mit der Option --wait gut beobachten:
