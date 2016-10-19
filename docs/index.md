@@ -7,7 +7,7 @@
 
 Weitere Beispiele zeigen, wie über die API des SysEleven Stack komplexere Setups verwaltet werden können. 
 
-### Komplexe Setup
+### Komplexe Setups
 
 Auf dem Einstieg aufbauend stellt SysEleven eine [Bibliothek an Basis-Templates](https://github.com/syseleven/heattemplates-examples) bereit, die nach dem Einstieg den Aufbau komplexerer Setups ermöglichen.
 
