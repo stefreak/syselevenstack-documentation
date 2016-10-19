@@ -44,7 +44,7 @@ syselevenstack@kickstart:~/failingDemo$
 
 ## Die Lösung: saubere Definition der Reihenfolge
 
-In diesem Code-Beispiel geben wir eine saubere Kette an Abhängigkeiten an, so dass das Setup sauber hoch fährt und sich auch wieder problemlos löschen lässt. Hier der Auszug aus dem verteilten Beispiel-Setup(link required):
+In diesem Code-Beispiel geben wir eine saubere Kette an Abhängigkeiten an, so dass das Setup sauber hoch fährt und sich auch wieder problemlos löschen lässt:
 
 ```
 resources:
