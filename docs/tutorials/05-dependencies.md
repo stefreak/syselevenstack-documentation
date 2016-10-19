@@ -63,16 +63,36 @@ resources:
 
 ```
 syselevenstack@kickstart:~/heattemplates-examples/example-setup$ openstack stack create -t clustersetup.yaml -e clustersetup-env.yaml depTest --wait
-2016-10-19 11:04:54 [depTest]: CREATE_IN_PROGRESS  Stack CREATE started
-2016-10-19 11:04:54 [syseleven_net]: CREATE_IN_PROGRESS  state changed
-2016-10-19 11:04:55 [syseleven_net]: CREATE_COMPLETE  state changed
-2016-10-19 11:04:55 [syseleven_subnet]: CREATE_IN_PROGRESS  state changed
-2016-10-19 11:04:57 [syseleven_subnet]: CREATE_COMPLETE  state changed
-2016-10-19 11:04:57 [syseleven_router]: CREATE_IN_PROGRESS  state changed
-2016-10-19 11:04:59 [syseleven_router]: CREATE_COMPLETE  state changed
-2016-10-19 11:04:59 [router_subnet_connect]: CREATE_IN_PROGRESS  state changed
-2016-10-19 11:05:01 [router_subnet_connect]: CREATE_COMPLETE  state changed
-2016-10-19 11:05:06 [node_group]: CREATE_IN_PROGRESS  state changed
+2016-10-19 11:42:17 [depTest]: CREATE_IN_PROGRESS  Stack CREATE started
+2016-10-19 11:42:17 [syseleven_net]: CREATE_IN_PROGRESS  state changed
+2016-10-19 11:42:18 [syseleven_net]: CREATE_COMPLETE  state changed
+2016-10-19 11:42:18 [syseleven_subnet]: CREATE_IN_PROGRESS  state changed
+2016-10-19 11:42:20 [syseleven_subnet]: CREATE_COMPLETE  state changed
+2016-10-19 11:42:20 [syseleven_router]: CREATE_IN_PROGRESS  state changed
+2016-10-19 11:42:22 [syseleven_router]: CREATE_COMPLETE  state changed
+2016-10-19 11:42:22 [router_subnet_connect]: CREATE_IN_PROGRESS  state changed
+2016-10-19 11:42:25 [router_subnet_connect]: CREATE_COMPLETE  state changed
+2016-10-19 11:42:25 [servicehost_group]: CREATE_IN_PROGRESS  state changed
+2016-10-19 11:42:26 [lb_group]: CREATE_IN_PROGRESS  state changed
+2016-10-19 11:42:27 [appserver_group]: CREATE_IN_PROGRESS  state changed
+2016-10-19 11:42:31 [dbserver_group]: CREATE_IN_PROGRESS  state changed
+2016-10-19 11:42:43 [servicehost_group]: CREATE_COMPLETE  state changed
+2016-10-19 11:42:44 [dbserver_group]: CREATE_COMPLETE  state changed
+2016-10-19 11:42:45 [lb_group]: CREATE_COMPLETE  state changed
+2016-10-19 11:42:50 [appserver_group]: CREATE_COMPLETE  state changed
+2016-10-19 11:42:50 [depTest]: CREATE_COMPLETE  Stack CREATE completed successfully
++---------------------+-----------------------------------------------------------------+
+| Field               | Value                                                           |
++---------------------+-----------------------------------------------------------------+
+| id                  | cc2dd31a-feb0-4026-8693-29926c8b1191                            |
+| stack_name          | depTest                                                         |
+| description         | A template to deploy and configure a loadbalanced server setup. |
+| creation_time       | 2016-10-19T11:42:17                                             |
+| updated_time        | None                                                            |
+| stack_status        | CREATE_COMPLETE                                                 |
+| stack_status_reason | Stack CREATE completed successfully                             |
++---------------------+-----------------------------------------------------------------+
+
 ```
 
 ## Beispiel-Ressourcen:
