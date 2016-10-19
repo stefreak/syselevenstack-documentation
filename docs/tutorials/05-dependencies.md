@@ -1,4 +1,4 @@
-# Defining dependiencies between openstack resources 
+# Stack-Ressourcen logisch aufeinander aufbauen 
 
 [TOC]
 
