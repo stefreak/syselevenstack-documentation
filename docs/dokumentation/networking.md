@@ -35,3 +35,7 @@ Unter dem Punkt "Host Routes" können wir unsere Route festlegt.
 Dafür legen wir unseren Ziel IP-Bereich fest (z.B. 10.0.0.0/24) und auch die IP Adresse des dazugehörigen Router Interfaces.
 Mit "Submit" können wir das Ganze speichern und wiederholen es für das andere Subnet.
 ![Interface Übersicht](../img/router-interface.png)
+
+####Fazit
+Nun haben wir zwei Subnetze verbunden, die untereinander kommunizieren können. 
+Außerdem haben wir eine eigene Hostroute angelegt und auch verschiedene Unterpunkte im Dashboard kennengelernt.
