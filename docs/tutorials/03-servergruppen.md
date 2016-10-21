@@ -70,7 +70,7 @@ heat_template_version: 2014-10-16
 description: deploys a group of servers
 
 parameters:
- server_count
+ server_count:
   type: string
   default: 2
 
