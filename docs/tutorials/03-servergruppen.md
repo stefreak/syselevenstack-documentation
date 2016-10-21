@@ -69,12 +69,17 @@ heat_template_version: 2014-10-16
 
 description: deploys a group of servers
 
+parameters:
+ server_count
+  type: string
+  default: 2
+
 resources:
   multiple_hosts:
     type: OS::Heat::ResourceGroup
     depends_on: example_subnet
     properties:
-      count: 2 
+      count: { get_param: server_count } 
       resource_def: 
         type: server.yaml
         properties:
