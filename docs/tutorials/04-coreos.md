@@ -44,7 +44,7 @@ coreos:
         ExecStop=/usr/bin/docker stop nginx
 ```
 
-Diese Datei können wir als ```user-data``` vorerst abspeichern.
+Diese Datei können wir als [```user-data```](../img/user-data-coreos) vorerst abspeichern.
 
 Mit o.g. Daten reicht ein Befehl
 
