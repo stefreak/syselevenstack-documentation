@@ -145,5 +145,10 @@ Wir erreichen so mehrere Vorteile:
 * Die Anzahl der Ressourcen in einer Gruppe lässt sich einfach in Parameter auslagern, so dass verschieden skalierte Setups aus der selben Code-Basis erstellt werden können.
 
  
+## Beispiel-Ressourcen:
+
+Das auf Github veröffentlichte Beispiel [examplesetup](https://github.com/syseleven/heattemplates-examples/tree/master/example-setup) setzt reourceGroups zur Vereinfachung ein.
+
+
 
 
