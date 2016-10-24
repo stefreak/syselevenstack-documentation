@@ -1,0 +1,33 @@
+# Tutorial Name: was wird mit dem Tutorial gezeigt?
+
+[TOC]
+
+## Ziel
+
+* Was wird mit dem Tutorial erreicht? 
+* Was wird neben dem Haupt-Ziel umgesetzt?
+
+## Vorraussetzungen 
+
+* Welche Tutorials/ Skills werden vorrausgesetzt?
+* Gehen wir über die CLI oder Horizon?
+
+## 1. Schritt
+
+Hier wird der erste Schritt gezeigt, optional mit Bild
+![SysEleven Login](../img/example.jpg)
+
+## n-ter Schritt 
+
+Hier wird der n-te Schritt gezeigt, optional mit Bild
+![SysEleven Login](../img/example.jpg)
+Optional mit Code:
+```
+ssh syseleven@<meineIP-Adresse>
+```
+
+## Conclusio: was haben wir erreicht?
+
+## Link Ressource/Quellen
+
+## Weiterführende Links/Beispiele
