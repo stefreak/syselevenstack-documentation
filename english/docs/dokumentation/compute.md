@@ -40,7 +40,9 @@ For example, this is how you would use our orchestration service to fetch a fixe
 
 ### My compute instace was created, but is not accessible via SSH/HTTP etc.
 
-Grundsätzlich sind alle Compute Instanzen im SysEleven Stack mit einer Default-Security-Group gesichert, die außer ICMP-Paketen keinen Traffic auf die VMs akzeptiert. Für jeden Service, der erreichbar sein soll, muss also eine Security-Group-Regel erstellt werden, die den Zugriff ermöglicht. Hier ein Beispiel wie HTTP(S)-Traffic mit einem Heat-Template unseres Orchestration Service zu ihrer Instanz erlaubt werden kann:
+By default all compute instances of are booted in the "default" security-group. It's settings do not allow any other packets, except of ICMP in order to be able to ping your compute instance.
+For any other port you might for your service, you will have to add a rule to the security-group your instance is part of (like ssh or http).
+For example, using the orchestration service, this is a template that would allow ingest traffic for HTTP/HTTPS to your security-group.
 
 ```
 resources:
@@ -54,7 +56,7 @@ resources:
         - { direction: ingress, remote_ip_prefix: 0.0.0.0/0, port_range_min: 443, port_range_max: 443, protocol: tcp }
 ```
 
-Diese so gebaute Security-Group muss noch an einen Port gebunden werden:
+This security-group can now be connected to a port of your networking.
 
 ```
   example_port:
@@ -63,10 +65,10 @@ Diese so gebaute Security-Group muss noch an einen Port gebunden werden:
       security_groups: [ get_resource: allow_webtraffic, default ]
       network_id: { get_resource: example_net}
 ```
-Die Security-Group "default" ist in diesem Beispiel hinzugefügt, da diese Gruppe im SysEleven Stack dafür sorgt, dass Traffic, der ausgehend erlaubt ist, auch eingehend erlaubt wird.
+The security group "default" is added in this example, since this group is taking care of allowing traffic going outbound.
 
-### Kann ich eigene Images in OpenStack nutzen?
-Das ist kein Problem; eigene Images können wie hier im Beispiel hochgeladen und danach genutzt werden:
+### Can I use my own images in the Compute Service?
+You can easily upload your own image and use it right after, like this:
 
 ```
 glance  image-create --progress --is-public False --disk-format=qcow2\
