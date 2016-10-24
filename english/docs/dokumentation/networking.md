@@ -2,48 +2,50 @@
 
 [TOC]
 
-## Übersicht
+## Overview
 
-SysEleven Stacks Networking Service basiert auf dem OpenStack Neutron Projekt.
+SysEleven Stacks Networking Service is built on the OpenStack Neutron project.
 
-Sowohl via unserer öffentlichen OpenStack API, als auch durch das SysEleven Stack Dashboard können sie ihr virtualisierter Netzwerk verwalten.
+Via our public OpenStack API, as well as through our dashboard interface you are able to manage your virtualised networking.
 
-### Wie verbinde ich 2 Subnetze miteinander?
+## FAQ
 
-####Vorraussetzungen:
-* Zugang zum Dashboard
-* min. 2 vorhandene Router/Stacks
-* verschiedene IP-Ranges 
+### How do I connect 2 subnets with another?
 
-####Login
+#### Requirements
 
-Mit den von SysEleven erhaltenen Daten für Nutzername und Passwort loggen wir uns ein unter https://dashboard.cloud.syseleven.net
+* Access to the dashboard
+* min. 2 existing routers/networks
+* different IP-ranges in both networks
+
+#### Login
+
+We log in with our credentials to the dasboard at https://dashboard.cloud.syseleven.net
 
 ![SysEleven Login](../img/login_router.png)
 
-####Interface im Router anlegen
+#### Create interface in router
 
-Um ein Interface einzurichten, klicken wir zunächst in der linken Seitenleiste unter Network auf Routers.
-Wählen dann den ersten Router für unsere Verbindung aus und klicken dafür auf den Namen.
-Im sich nun öffnenden Fenster gehen wir auf den Reiter "Interfaces" und wählt dann "Add Interfaces" aus.
-Hier wählt man im ersten Punkt den Ziel Router aus und vergibt unter IP eine eigene IP-Adresse (aus dem zugehörigen IP-Netz) und geht dann auf "Submit"
-Diese Schritte wiederholt man nun für den anderen Router entsprechend. 
+To create a new interface on our router, we click on the left side-bar, then "network" and "router".
+Click on the first router we want to establish a connection with.
+In the new window, under "interfaces" we click on "add interfaces".
+As the first step we click on the router we want to connect to and add an IP under "IP" from the related subnet. Finally click in "Submit".
+Repeat the above steps with the other router.
 
-![Interface Übersicht](../img/hostroute.png)
+![Interface Overview](../img/hostroute.png)
 
-####Hostroute anlegen
+#### Creating the hostroute
 
-Als nächsten Schritt benötigen wir noch eine Hostroute.
-Dafür gehen wir in der Seitenleiste nun auf Network, wählen unser Netzwerk aus und klicken auf den Namen.
-Dort sehen wir alle zugehörigen Subnetze, klicken bei dem zugehörigen Subnet auf "Edit Subnet" und wählen den Reite "Subnet Details".
-Unter dem Punkt "Host Routes" können wir unsere Route festlegt.
-Dafür legen wir unseren Ziel IP-Bereich fest (z.B. 10.0.0.0/24) und auch die IP Adresse des dazugehörigen Router Interfaces.
-Mit "Submit" können wir das Ganze speichern und wiederholen es für das andere Subnet.
+The second step is to create the hostroute.
+On the left side-bar we click on "network", and then click on the network we want to share.
+We will now find all the related subnets. Click on the particular subnet you want to connect and "edit subnet" and go to "subnet details".
+Under "host routes" we can now set the right route.
+We have to specify our ip-range (e.g. 10.0.0.0/24) and the ip address of the specific router interface. Clicking "Submit" we can save our hostroute and repeat the process with the other subnet.
 
-![Interface Übersicht](../img/router-interface.png)
+![Interface Overview](../img/router-interface.png)
 
 ####Fazit
 
-Nun haben wir zwei Subnetze verbunden, die untereinander kommunizieren können. 
+We now have connected two subnets, that can now communicate with another.
 
-Außerdem haben wir eine eigene Hostroute angelegt und auch verschiedene Unterpunkte im Dashboard kennengelernt.
+We have also set up our own hostroutes and got to know the networking settings in the dashboard.

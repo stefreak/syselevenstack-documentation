@@ -6,7 +6,7 @@
 
 SysEleven Stacks Compute Service is built on the OpenStack Nova Projekt.
 
-Sowohl via unserer öffentlichen OpenStack API, als auch durch das SysEleven Stack Dashboard können Compute Instanzen verwaltet werden.
+Via our public OpenStack API, as well as through our dashboard interface you are able to manage your compute instances.
 
 ## Instance types
 
