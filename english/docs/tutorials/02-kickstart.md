@@ -1,27 +1,27 @@
-# SysEleven Stack API - Beginner Tutorial 
+# Using the SysEleven Stack API: Beginner Tutorial 
 
 [TOC]
 
-## Ziel
+## Goal
 
-* Authentifizierung gegen die SysEleven Stack API
-* Starten eines Beispiel-Stacks über die API
+* Authenticating to use the SysEleven Stack API
+* Starting a sample stack using the SysEleven Stack API
 
-## Vorraussetzungen 
+## Prerequisites 
 
-* Login-Daten für den SysEleven Stack liegen vor (Nutzername/ Passwort).
-* Die Openstack-Commandline Clients sind in einer aktuellen Version installiert.
-* Der Umgang mit einem Terminal ist vertraut.
+* You need to have the login data for the SysEleven Stack API (user name and passphrase).
+* A current version of the OpenStack command line tools.
+* Basic knowledge of using a terminal.
 
-## Zugriff auf die SysEleven Stack API
+## Accessing the SysEleven Stack API
 
-Um mit der API des SysEleven Stack zu arbeiten, werden in der Shell-Session Umgebungsvariablen benötigt, mit denen die jeweiligen Clients gegenüber der API authentifiziert und authorisiert werden. Als eingeloggter Benutzer kann man sich diese Umgebungsvariablen gesammelt in einer Datei im Dashboard herunterladen. Der Punkt ist zu finden unter "Compute" --> "Access & Security" --> "API Access". Dort wird durch einen Klick auf "Download OpenStack RC File v3" die entsprechende Datei heruntergeladen.
+To work with the SysEleven Stack API you need to set environment variables used by the command line tools to authenticate and authorize your API calls. Users logged into the [Dashboard](https://dashboard.cloud.syseleven.net) can download a file that helps setting these variables under "Compute" --> "Access & Security" --> "API Access". There you can click on "Download OpenStack RC File v3" to download it.
  
 ![Environment Variable Download](../img/openrc.png)
 
-## Umgebungsvariablen in die Shell-Session einlesen 
+## Setting up the environment variables
 
-Um den Clients die Angaben zur Authentifizierung und Authorisierung (Nutzername/Passwort/Projekt-Scope) für die jeweilige Session bekannt zu machen, lesen wir die heruntergeladene Datei ein:
+To use the file in your terminal session, you need to source it:
 
 ```
 source Downloads/sys11demo-openrc.sh
@@ -29,11 +29,11 @@ source Downloads/sys11demo-openrc.sh
 
 ![source openrc](../img/source.png)
 
-Das Einlesen der Umgebungsvariablen erzeugt kein Feedback auf dem Terminal, dies ist erwartetes Verhalten.
+Sourcing this file to set up environment variables does not return output.
 
-## Testen des Zugriffs
+## Test API Access
 
-Wir können nun den OpenStack Client nehmen, um unseren Zugang zu testen:
+We can now use the OpenStack command line client to check whether our access works:
 
 ```
 jpeschke:~ jpeschke$ openstack network list
@@ -44,18 +44,18 @@ jpeschke:~ jpeschke$ openstack network list
 +--------------------------------------+---------+--------------------------------------+
 ```
 
-Wir sehen, dass als Rückgabewert der Netzwerk-Pool mit Floating-IPs zurückgegeben wird. Das ist die Bestätigung, dass erfolgreich mit der API des SysEleven Stack kommuniziert wurde.
+In this example you see a network pool which provides us with Floating IP addresses. This shows that you successfully
+used the SysElevenStack API.
 
-## Starten eines Infrastruktur-Templates
+## Using infrastructure templates
 
-Nun kann jede Infrastruktur-Komponente des SysEleven Stacks (Beispielsweise Netzwerk, Security-Groups oder virtuelle Maschinen) über die Commandline-Clients verwaltet werden. Um diesen Vorgang zusammenzufassen, kann auf Templates zurückgegriffen werden, in denen die Infrastruktur gesammelt beschreiben.
-Beispielhafte Setups können von Github kopiert werden:
+Now you can use the OpenStack command line tools to control all the infrastructure components of the SysEleven Stacks (i.e., networks, security groups, virtual machines). To automate this, you can use Heat templates which are a structured representation of your setups. SysEleven provides examples that work with the SysEleven Stack on github. Feel free to check them out!
 
 ```
 git clone https://github.com/syseleven/heattemplates-examples.git
 ```
 
-Wir nehmen an dieser Stelle das aus Tutorial-01 bekannte LAMP-Setup und starten es dieses Mal über die API:
+Now you can take the LAMP setup from our (Tutorial)[../tutorial] and start it using the API:
 
 ```
 cd heattemplates-examples/lampServer
