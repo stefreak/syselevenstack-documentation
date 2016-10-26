@@ -2,48 +2,45 @@
 
 [TOC]
 
-## Übersicht
+## Overview
 
-SysEleven Stacks Object Storage Service stellt einen S3 kompatiblen Object Storage dar.
+SysEleven Stack provides S3 compatible Object Storage.
 
-Die OpenStack API kann genutzt werden um Credentials für unseren Object Storage zu erstellen. Die S3 API kann mit diversen S3 Clients und SDKs angesprochen werden.
+You can create the OpenStack API to generate credentials to access the SysEleven Stack Object Storage. You can then use the S3 API with various S3 clients and/or SDKs.
+
 
 ### Buckets
 
-Buckets sind die logische Organisationseinheit unter der Objekte im SysEleven Stack Object Storage gespeichert werden.
-Der Name eines Buckets ist im SysEleven Stack einmalig und damit eindeutig.
+Buckets are the logical unit SysEleven Stack Object Storage uses to stores objects. Every bucket in the SysEleven Stack as a unique name.
 
 ### Objects
 
-Der SysEleven Stack Object Storage Service ist im Prinzip ein großer Key/Value Storage.
-Eine Datei oder Datenobject können einem Key wie einem Dateinamen zugewiesen werden und unter diesem im Object Storage abgelegt und verfügbar gemacht werden.
+Basically, SysEleven Stack Object Storage is a big key/value store. A file or file object can be assigned a file name like key, and made available under this key.
 
 ## FAQ
 
-### Kann ich im SysEleven Stack Object Storage (S3) verwenden?
+### Can I use S3 in the SysEleven Stack?
 
-Ja. Folgende Voraussetzungen müssen dafür erfüllt sein:
+Yes. You need to meet the following prerequisites need:
 
-* Um S3 im SysEleven Stack nutzen zu können müssen dem OpenStack Useraccount erweiterte Rechte zugewiesen werden. Dafür reicht eine E-Mail an cloudsupport@syeleven.de.
 
-* Ein OpenStack Command Line Client in der Version >= 2.0.
-
-* Ein S3 Client wie z.B. s3cmd
-
-* Eine Anpassung der Shellumgebung bzw. openrc:
+* You need to request additional rights for your user account. To do that, please send an email to our [Cloud Support](mailto:cloudsuppor@syseleven.de).
+* You need the OpenStack command line tools in a current version (2.0 or newer).
+* An S3 client, i.e., `s3cmd`d
+* A change to your shell environment (you can add this to your `openrc` file):
 
 ```
 export OS_INTERFACE="public"
 ```
 
-Sind diese Voraussetzungen erfüllt können wir uns die S3 Credentials generieren und anzeigen lassen:
+When these prerequisites are met, you can generate and display S3 credentials:
 
 ```
 openstack ec2 credentials create
 openstack ec2 credentials list
 ```
 
-Mit diesen Informationen können wir uns eine S3 Konfiguration mit folgendem Inhalt erstellen:
+Now you can create an S3 configuration which should look like this:
 
 ```
 syseleven@kickstart:~$ cat .s3cfg
@@ -57,24 +54,24 @@ check_ssl_certificate = True
 check_ssl_hostname = False
 ```
 
-Im nächsten Schritt erstellen wir einen S3 Bucket:
+Next, create an S3 Bucket:
 
 ```
 s3cmd mb s3://BUCKET_NAME
 ```
 
-und befüllen diesen mit Inhalt:
+Then, use it to add some file(s):
 
 ```
 s3cmd put test.jpg s3://BUCKET_NAME -P
 ```
 
-Mit dem Schalter -P stellen wir die Datei der Öffentlichkeit zur Verfügung. Hierbei ist zu beachten, dass die Ausgabe von s3cmd eine falsche URL ausgibt wie z.B.: 
+The commandline option `-P` means the file(s) uploaded is publically available. Please note that s3cmd returns incorrect URLs, i.e.:
 
 ```
 Public URL of the object is: http://BUCKET_NAME.s3.amazonaws.com/test.jpg
 ```
 
-Ein Zugriff auf die S3 Datei ist unter der folgenden URL möglich: https://s3.cloud.syseleven.net/BUCKET_NAME/test.jpg
+The correct URL in this case would be https://s3.cloud.syseleven.net/BUCKET_NAME/test.jpg
 
-Damit sind wir in der Lage static assets über eine HTTP URL einzubinden.
+You can use these URLs to refer to the uploaded files as static assets in your web applications.
