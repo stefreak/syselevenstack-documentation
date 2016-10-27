@@ -4,24 +4,23 @@
 
 ## Overview
 
-SysEleven Stack Block Storage Service is built on OpenStacks Cinder project.
+SysEleven Stack Block Storage Service is based on the OpenStack Cinder project.
 
-Via our public OpenStack API, as well as through our dashboard interface you are able to manage your Block Storage Volumes and make them available to your compute instances.
-You can also create snapshots from your block storages volumes, which you might use as a boot image or as a template for the creation of other block storage volumes.
+You can manage your block storage volumes and make them available to your compute instances both via our public OpenStack API endpoints, as well as using the [Dashboard](https://dashboard.cloud.syseleven.net).
+
+You can also create snapshots from your block storages volumes, which you can use as a boot image or as a template for the creation of other block storage volumes.
 
 ## FAQ
 
-### Is it possible to use a block storage volume across multiple VMs simultaneously?
+### Can I use a block storage volume across multiple VMs simultaneously?
 
-Unfortunately this is not possible. Think of a block storage volume like a virtual hard disk - as much as the hard disk can not be connected to multiple computers at the same time, same goes with a block storage volume and multiple compute instances.
+Unfortunately this is not possible. Think of a block storage volume like a virtual hard disk - just as you cannot connect a hard disk to multiple computers at the same time, you cannnot connect a block storage volume to multiple compute instances at the same time.
 
-### How can I provide a shared storage inside SysEleven Stack?
+### How can I get shared storage inside SysEleven Stack?
 
-There is multiple options, for instance:
+There are multiple options, for instance:
 
- * NFS
- * S3
+ * S3 (provided as part of the SysEleven Stack)
+ * NFS (interim solution for legacy applications)
 
-We built an example template for an NFS server with multiple automatically connecting NFS clients, which can be used with our orchestration service.
-
-[https://github.com/syseleven/heattemplates-examples/tree/master/sharedVolume](https://github.com/syseleven/heattemplates-examples/tree/master/sharedVolume)
+For the NFS case, we provide a [shared volume](https://github.com/syseleven/heattemplates-examples/tree/master/sharedVolume) template with multiple automatically connecting NFS clients, which you can use with our orchestration service.
