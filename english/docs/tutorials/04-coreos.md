@@ -1,26 +1,27 @@
-# CoreOS mit erstem Container im SysEleven Stack
+# Using CoreOS and Containers in the SysEleven Stack
 
-## Voraussetzungen
+## Requirements
 
-Für dieses Tutorial wird der python-openstackclient Client benötigt.
+For this tutorial you will need to use `python-openstackclient`:
 
 ```
 pip install python-openstackclient
 ```
-Die benötigten Umgebungsvariablen um mit der OpenStack API zu kommunizieren müssen gesetzt sein, wie in [https://doc.syselevenstack.com/tutorials/02-kickstart/#umgebungsvariablen-in-die-shell-session-einlesen](https://doc.syselevenstack.com/tutorials/02-kickstart/#umgebungsvariablen-in-die-shell-session-einlesen) beschrieben.
 
-Ihr SSH-Key sollte im SysEleven Stack hochgeladen worden sein.
+You will also need to set the required environment variables to use the OpenStack API, as described in [our kickstart tutorial](https://doc.syselevenstack.com/tutorials/02-kickstart/#umgebungsvariablen-in-die-shell-session-einlesen).
 
-### CoreOS Im SysEleven Stack starten
+You also need to have a public SSH key uploaded to the SysEleven Stack.
 
-Als ersten Schritt müssen wir das CoreOS Image ausfindig machen.
+### Starting CoreOS in the SysEleven Stack
+
+Step one: Find the latest CoreOS image in the image list:
 
 ```
 $ openstack image list | grep -i CoreOS
 | c4e4ac2c-83db-4331-bf8c-3488aff057c8 | CoreOS Stable 1122.2.0                          | active |
 ```
 
-CoreOS ist über User-Data konfigurierbar. Zum Beispiel um einen Nginx Docker Container nach dem Boot zu starten, folgendermaßen:
+You can configure CoreOS using User-Data. Here is an example showing how to start an NGINX docker container after boot:
 
 ```
 #cloud-config
@@ -44,20 +45,16 @@ coreos:
         ExecStop=/usr/bin/docker stop nginx
 ```
 
-Diese Datei können wir als [```user-data```](../img/user-data-coreos) vorerst abspeichern.
+Save this to a file called [```user-data```](../img/user-data-coreos).
 
-Mit o.g. Daten reicht ein Befehl
+With this file, the following command will launch a compute instance which will start the NGINX container. It will be reachable via port 80:
 
 ```
 openstack server create --image c4e4ac2c-83db-4331-bf8c-3488aff057c8 --flavor m1.micro --user-data user-data --security-group default --nic 'net-id=aec02c14-5659-4eae-a267-501a28e672b4' --key-name 'mykey' coreos-nginx
 ```
 
-um eine neue Compute Instanz mit CoreOS zu starten, welche den nginx Container starten wird und auf Port 80 erreichbar macht.
+### Finalizing the setup and testing it
 
-### Abschließender Funktionstest
-
-```ip floating create ext-net``` erstellt uns eine Floating IP um den Container vom Internet erreichbar zu machen.
-
-```ip floating add <IP> coreos-nginx``` verbindet genannte Floating IP mit zuvor gestarteter Compute Instanz.
-
-```curl http://<IP>``` sollte uns nun die Willkommen-Seite des nginx anzeigen.
+* ```ip floating create ext-net``` provides you with a floating IP you can use to make the container reachable over the internet.
+* ```ip floating add <floating-IP> coreos-nginx``` assigns the floating IP to the compute instance you just started.
+* ```curl http://<floating-IP>``` should now show you the welcome page of the NGINX web server.
