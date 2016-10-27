@@ -1,19 +1,18 @@
-# Resource Groups: vom Single-Server zu verteilten Setups 
-
+# Resource Groups: From Single Server to Distributed Setup
 [TOC]
 
-## Infrastrukturtemplates vereinfachen mit ResourceGroups
+## Simplifyling Infrastructure Templates with ResourceGroups
 
-* In diesem Tutorial wird gezeigt, wie Server in Gruppen zusammengefasst werden.
-* Die Anzahl gleicher Server kann so über Parameter gesteuert werden
+* This tutorial shows how you can group servers. That way you can control the
+* amount of identical servers via parameters.
 
-## Vorraussetzungen 
+## Prerequisites
 
-* Der grundlegende Umgang mit den OpenStack CLI-Tools wird als bekannt vorrausgesetzt.
+* We assume that you have basic familiarity with the OpenStack CLI tools
 
-## Wie es *nicht* sein sollte: redundanter Code
+## The How *not* To: Redundant Code
 
-Ein Template, in dem mehr als ein Server gestartet wird, könnte in Auszügen so aussehen:
+A template used to start more than a single server could look like this (excerpt):
 
 ```
 heat_template_version: 2014-10-16
@@ -53,11 +52,11 @@ resources:
 
 ```
 
-Wie man sieht, werden Server und Ports jeweils zwei mal beschrieben. Das wird spätestens dann lästig, wenn Setups mehrere dutzend gleiche Server beinhalten. Bequemer ist es, wenn man die Server in Gruppen organisiert und die Beschreibung in eine eigene Datei auslagert, die dann den Server nur einmal beschreibt.
+As you can see, servers and ports are defined twice. That will turn cumbersome with setups that have several dozen identically configured servers. It is more convenient if you organize servers in groups and keep their definition in a separate file.
 
-## Der elegante Weg: Gruppieren von Servern
+## The Elegant Way: Grouping Servers
 
-Ein einfaches Szenario mit mehreren gleichen Servern verteilt sich damit auf zwei Dateien, einmal die *setup.yaml*, in der alles außer meinen Servern beschrieben ist:
+A simple servers with several identical servers is split between two files: A *setup.yaml* that describes everything except the servers:
 
 ```
 heat_template_version: 2014-10-16 
@@ -105,7 +104,7 @@ resources:
       - {start: 10.0.0.10, end: 10.0.0.250}
 ```
 
-Die dazugehörige *server.yaml* enthält die eigentliche Definition unserer VM:
+This is accompanied by *server.yaml*, where the actual virtual machine definition is kept:
 
 ```
 heat_template_version: 2014-10-16
@@ -135,20 +134,18 @@ resources:
       network_id: { get_param: network_id }
 ```
 
-## Fazit: Modularer Code
+## Conclusion: Modular Code
 
-Wir erreichen so mehrere Vorteile:
+This method has several advantages:
 
-* Unser Code ist modularisiert.
-* Redundanz im Code wird vermieden.
-* Wir haben einen automatisch fortlaufenden Index, den wir hier am Beispiel der Servernamen nutzen.
-* Die Anzahl der Ressourcen in einer Gruppe lässt sich einfach in Parameter auslagern, so dass verschieden skalierte Setups aus der selben Code-Basis erstellt werden können.
-
+* Modular code is easier to re-use.
+* You avoid redundancies and repetition.
+* You get an automatically managed index you can use (in this example for the server name).
+* The number of resources in a group is controlled by a simple parameter, so you can generate differently scaled setups from the same code base.
  
-## Beispiel-Ressourcen:
+## An Example
 
-Das auf Github veröffentlichte Beispiel [examplesetup](https://github.com/syseleven/heattemplates-examples/tree/master/example-setup) setzt reourceGroups zur Vereinfachung ein.
-
+We published an [example setup](https://github.com/syseleven/heattemplates-examples/tree/master/example-setup) using ResourceGroups for modularization and simplification.
 
 
 
