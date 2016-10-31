@@ -1,14 +1,14 @@
 ![SysEleven Logo](img/stacklogo.svg)
 ## SysEleven Stack Documentation
 
-### Erste Schritte mit wenigen Resourcen - Zum Beispiel für ihren Testzeitraum
+### First steps with little resource use - perfect for your trial
 
-["Erste Schritte"](tutorials/01-firststeps.md) zeigt, wie über das Dashboard des SysEleven Stack eine virtuelle Maschine gestartet werden kann.
+["First steps"](tutorials/01-firststeps.md) show, how you can start a compute instance via the dashboard of the SysEleven Stack.
 
-Weitere Beispiele zeigen, wie über die API des SysEleven Stack komplexere Setups verwaltet werden können. 
+Further examples show, how you can use the API of the SysEleven Stack to manage complex setups.en können. 
 
-### Komplexe Setups
+### Complex setups
 
-Auf dem Einstieg aufbauend stellt SysEleven eine [Bibliothek an Basis-Templates](https://github.com/syseleven/heattemplates-examples) bereit, die nach dem Einstieg den Aufbau komplexerer Setups ermöglichen.
+On top of the first step examples, SysEleven provides a [library of basic templates](https://github.com/syseleven/heattemplates-examples) that will help you with the creation fo a complex setup.
 
-Genannte Setups sind nicht unter Berücksichtigung der zur Verfügung stehenden Testresourcen geplant.
+These setups are not written for the resources you have during your trial period.
