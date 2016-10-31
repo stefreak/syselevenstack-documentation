@@ -14,10 +14,10 @@ Currently we provide you with 4 different instance types.
 
 Name      | API Name  | Memory | VCPUs | Storage* | Network Performance
 ----------|-----------|--------|-------|----------|--------------------
-M1 Micro  | m1.micro  | 2GB    | 1     | 50GB     | niedrig
-M1 Small  | m1.small  | 8GB    | 2     | 50GB     | niedrig
-M1 Medium | m1.medium | 16GB   | 4     | 50GB     | mittel
-M1 Large  | m1.large  | 32GB   | 8     | 50GB     | hoch
+M1 Micro  | m1.micro  | 2GB    | 1     | 50GB     | low
+M1 Small  | m1.small  | 8GB    | 2     | 50GB     | low
+M1 Medium | m1.medium | 16GB   | 4     | 50GB     | medium
+M1 Large  | m1.large  | 32GB   | 8     | 50GB     | high
 
 *The storage of every instance can be extended using our Block Storage Service.
 
