@@ -1,6 +1,6 @@
 site_name: SysEleven Stack Documentation
 theme_dir: /usr/share/mkdocs/themes/mkdocs_bootswatch/flatly/
-google_analytics: ['UA-4634575-5', 'doc.cloud.syseleven.net']
+google_analytics: ['UA-4634575-5', 'doc.syselevenstack.com']
 repo_name: "GitHub"
 repo_url: "https://github.com/syseleven/syselevenstack-documentation"
 
