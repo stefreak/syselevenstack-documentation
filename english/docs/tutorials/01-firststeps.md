@@ -1,61 +1,48 @@
-# Erste Schritte
+# First steps
 
 [TOC]
 
-## Ziel
+## Goals
 
-* Start einer virtuellen Maschine
-* Automatisierte Installation eines Webservers, eines Datenbankserver und einer Datenbank sowie PHP.
+* Start a compute instance
+* Automated installation of a webserver running PHP, as well as a database server.
 
-## Vorraussetzungen
+## Prerequisites
 
-Es wird davon ausgegangen, dass der Umgang mit SSH und SSH-Keys bekannt ist.
+We assume, you know how to utilise ssh and ssh-keys.
 
 ## Login
 
-Mit den von SysEleven erhaltenen Daten für Nutzername und Passwort loggen wir
-uns ein unter [https://dashboard.cloud.syseleven.net](https://dashboard.cloud.syseleven.net)
+Please log in at [https://dashboard.cloud.syseleven.net](https://dashboard.cloud.syseleven.net)
+with your username and password (API credentials), provided from us.
 
 ![SysEleven Login](../img/login.png)
 
-## SSH-Key hinterlegen
+## Importing your ssh-key
 
-*    Um einen SSH-Key zu hinterlegen, bewegen wir uns im Dashboard in dem Reiter "Compute"
-   zu "Access and Security" und dort zu dem Bereich "Key Pairs". Dort wählen wir "Import Key Pair" aus, wählen einen 
-   Namen (den wir uns für die spätere Verwendung merken) und importieren per Copy & Paste unseren 
-   öffentlichen SSH-Schlüssel. 
+In order to import your ssh-key using the dashboard, we go to "Compute" and "Access And Security". From there we can head to "Key Pairs" and finaly "Import Key Pair".
+
+We have to give the key pair a name and copy/paste the public part of the key pair into the interface. Once submitted we can use the key pair with this name in the API and Templates.
 
 ![import ssh key](../img/sshkeys.png)
 
-## Starten der Maschine
+## Starting the compute instance
 
-   Die URL zum Template [lamp.yaml](https://raw.githubusercontent.com/syseleven/heattemplates-examples/master/lampServer/lamp.yaml) kopieren wir per Copy&Paste in den Zwischenspeicher.
+We have already created a template for our Orchestration Service for you. Feel free to check it out at [lamp.yaml](https://raw.githubusercontent.com/syseleven/heattemplates-examples/master/lampServer/lamp.yaml).
 
-*    Unter *Orchestration --> Stacks --> Launch Stack* starten wir das Template. Das Input-Feld "Template Source" stellen wir um auf URL. Dort fügen wir per Copy&Paste
-   die URL des Templates ein. Das Feld *Environment Source* belassen wir auf den Voreinstellungen und klicken auf "next".
-   Im Feld "Stackname" wählen wir *lampserver*. Das "Password"-Feld ist an dieser Stelle irrelevant, muss aber mit beliebigem Text befüllt werden. 
-   Als Parameter "key_name" geben wir den Namen an, den wir unserem öffentlichen SSH-Schlüssel vergeben haben.
-   Danach klicken wir "Launch" und unsere erste Maschine startet.
+At Orchestration --> Stacks --> Launch Stack we can now use the template we were just looking at to start our server.
+
+If we set the "Template Source" to "URL", we can now fill in the URL of the the above template into "Template URL" and go to "Next". We will set a name for the Stack at "Stackname", like *lampserver* and "key_name" should be the name of the key pair we uploaded initially. "Password" can be set to any value you like.
   
 ![Launch Stack](../img/launch.png)
 
 ## Login in den Server
-*    Für den Login auf der eben erstellten Maschine  besorgen wir uns die IP-Adresse der virtuellen Maschine. Diese sehen wir unter *Compute* --> *Instances* im Feld "Floating IP" für die neu gebaute Maschine.  Mit folgendem Befehl können wir den Zugriff auf
-   unsere Maschine unter Mac und Linux in einem Terminal testen:
 
-```
-ssh syseleven@<meineIP-Adresse>
-```
+* To log in to our compute instance, we have to gather its IP address. We can find our new instance at Compute --> Instances. "Floating IP" represents the public IP of our new compute instance. ```ssh syseleven@<floating-ip>``` should allow us to connect to the instance.  
 
 ![ssh login](../img/loginterminal.png)
 
-*    Im Hintergrund wird nun der Webserver, der Datenbankserver, eine akutelle PHP-Version und eine Datenbank installiert bzw. angelegt.  
-   Dem Fortschritt können wir folgen mit folgendem Befehl:
+* In the background, the webserver, database server and a current PHP version is being installed.
+You can check the progress via ```tail -f /var/log/cloud-init-output.log```
 
-
-```
-tail -f /var/log/cloud-init-output.log
-```
-
-   Nun kann eine beliebige PHP-Anwendung unter /var/www/html abgelegt und getestet werden.
-
+Furthermore, you can now simply upload your PHP application to /var/www/html and run it.
