@@ -36,7 +36,7 @@ If we set the "Template Source" to "URL", we can now fill in the URL of the the 
   
 ![Launch Stack](../img/launch.png)
 
-## Login in den Server
+## Login to the compute instance
 
 * To log in to our compute instance, we have to gather its IP address. We can find our new instance at Compute --> Instances. "Floating IP" represents the public IP of our new compute instance. ```ssh syseleven@<floating-ip>``` should allow us to connect to the instance.  
 
