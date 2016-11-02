@@ -118,16 +118,16 @@ Ein Beispiel Template kann so aussehen:
 ```
 heat_template_version: 2014-10-16
 
-  description: Simple template to upload an image
+description: Simple template to upload an image
 
-    resources:
-      glance_image:
-        type: OS::Glance::Image
-        properties:
-          container_format: bare
-          disk_format: qcow2
-          name: Gentoo
-          location: http://gentoo.osuosl.org/experimental/amd64/openstack/gentoo-openstack-amd64-default-20161008.qcow2
+resources:
+  glance_image:
+    type: OS::Glance::Image
+    properties:
+      container_format: bare
+      disk_format: qcow2
+      name: Gentoo
+      location: http://gentoo.osuosl.org/experimental/amd64/openstack/gentoo-openstack-amd64-default-20161008.qcow2
 ```
 Eine tolle Erklärung dazu findest du hier:
 https://dashboard.cloud.syseleven.net/horizon/project/stacks/resource_types/OS::Glance::Image
