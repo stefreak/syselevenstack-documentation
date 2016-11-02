@@ -10,7 +10,7 @@ You can manage your network both via our public OpenStack API endpoints, as well
 
 ## FAQ
 
-### How do I Connect two Subnets With Another?
+### How do I connect two subnets with another?
 
 #### Prerequisites
 
