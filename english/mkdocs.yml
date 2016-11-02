@@ -1,6 +1,6 @@
 site_name: SysEleven Stack Documentation
-theme_dir: /srv/documentation/custom_yeti_theme
-google_analytics: ['UA-4634575-5', 'doc.cloud.syseleven.net']
+theme_dir: /usr/share/mkdocs/themes/mkdocs_bootswatch/flatly/
+google_analytics: ['UA-4634575-5', 'doc.syselevenstack.com']
 repo_name: "GitHub"
 repo_url: "https://github.com/syseleven/syselevenstack-documentation"
 
@@ -12,12 +12,12 @@ pages:
     - 'Organising instances in groups': 'tutorials/03-servergruppen.md'
     - 'Minimal CoreOS setup': 'tutorials/04-coreos.md'
     - 'Built stack-ressources logically upon another': 'tutorials/05-dependencies.md'
-  - 'Dokumentation':
-    - 'Compute': 'dokumentation/compute.md'
-    - 'Networking': 'dokumentation/networking.md'
-    - 'Block Storage': 'dokumentation/block-storage.md'
-    - 'Object Storage': 'dokumentation/object-storage.md'
-    - 'Orchestration': 'dokumentation/orchestration.md'
+  - 'Documentation':
+    - 'Compute': 'documentation/compute.md'
+    - 'Networking': 'documentation/networking.md'
+    - 'Block Storage': 'documentation/block-storage.md'
+    - 'Object Storage': 'documentation/object-storage.md'
+    - 'Orchestration': 'documentation/orchestration.md'
 
 copyright: SysEleven Stack is made with ♥ in Berlin.<br/>
     For further questions, don't hesitate to contact us at <a href="mailto:cloudsupport@syseleven.de">cloudsupport@syseleven.de</a>
