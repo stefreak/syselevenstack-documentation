@@ -13,11 +13,34 @@ Ihr SSH-Key sollte im SysEleven Stack hochgeladen worden sein.
 
 ### CoreOS Im SysEleven Stack starten
 
-Als ersten Schritt müssen wir das CoreOS Image ausfindig machen.
+Als ersten Schritt müssen wir das CoreOS Image hochladen.
 
 ```
-$ openstack image list | grep -i CoreOS
-| c4e4ac2c-83db-4331-bf8c-3488aff057c8 | CoreOS Stable 1122.2.0                          | active |
+eval $(curl https://stable.release.core-os.net/amd64-usr/current/version.txt)
+wget https://stable.release.core-os.net/amd64-usr/$COREOS_VERSION/coreos_production_openstack_image.img.bz2
+openstack image create --container-format bare --disk-format qcow2 --file coreos_production_openstack_image.img.bz2 "CoreOS $COREOS_VERSION"
++------------------+------------------------------------------------------+
+| Field            | Value                                                |
++------------------+------------------------------------------------------+
+| checksum         | 0244e1b3420b7c170e27197eed0d0025                     |
+| container_format | bare                                                 |
+| created_at       | 2016-11-03T16:01:11Z                                 |
+| disk_format      | qcow2                                                |
+| file             | /v2/images/0882e2a7-aa27-46e6-affe-8c701dc250f5/file |
+| id               | 0882e2a7-aa27-46e6-affe-8c701dc250f5                 |
+| min_disk         | 0                                                    |
+| min_ram          | 0                                                    |
+| name             | CoreOS 1185.3.0                                      |
+| owner            | 2b64d96fb0434283822a1f88f00993f9                     |
+| protected        | False                                                |
+| schema           | /v2/schemas/image                                    |
+| size             | 258548177                                            |
+| status           | active                                               |
+| tags             |                                                      |
+| updated_at       | 2016-11-03T16:01:14Z                                 |
+| virtual_size     | None                                                 |
+| visibility       | private                                              |
++------------------+------------------------------------------------------+
 ```
 
 CoreOS ist über User-Data konfigurierbar. Zum Beispiel um einen Nginx Docker Container nach dem Boot zu starten, folgendermaßen:
