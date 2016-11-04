@@ -20,4 +20,5 @@ pages:
     - 'Orchestration': 'documentation/orchestration.md'
 
 copyright: SysEleven Stack is made with ♥ in Berlin.<br/>
+    Switch to <a href="https://doc.syselevenstack.com/de/">german documentation</a>
     For further questions, don't hesitate to contact us at <a href="mailto:cloudsupport@syseleven.de">cloudsupport@syseleven.de</a>

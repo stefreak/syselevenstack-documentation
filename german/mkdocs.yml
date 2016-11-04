@@ -13,11 +13,12 @@ pages:
     - 'Minimale CoreOS Umgebung': 'tutorials/04-coreos.md'
     - 'Stack-Ressourcen logisch aufeinander aufbauen': 'tutorials/05-dependencies.md'
   - 'Dokumentation':
-    - 'Compute': 'dokumentation/compute.md'
-    - 'Networking': 'dokumentation/networking.md'
-    - 'Block Storage': 'dokumentation/block-storage.md'
-    - 'Object Storage': 'dokumentation/object-storage.md'
-    - 'Orchestration': 'dokumentation/orchestration.md'
+    - 'Compute': 'documentation/compute.md'
+    - 'Networking': 'documentation/networking.md'
+    - 'Block Storage': 'documentation/block-storage.md'
+    - 'Object Storage': 'documentation/object-storage.md'
+    - 'Orchestration': 'documentation/orchestration.md'
 
 copyright: SysEleven Stack is made with ♥ in Berlin.<br/>
+    Switch to <a href="https://doc.syselevenstack.com/en/">english documentation</a>
     For further questions, don't hesitate to contact us at <a href="mailto:cloudsupport@syseleven.de">cloudsupport@syseleven.de</a>
