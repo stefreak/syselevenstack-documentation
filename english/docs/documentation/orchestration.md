@@ -2,7 +2,9 @@
 
 [TOC]
 
-The SysElevenStack orchestration service is based on the OpenStack Heat project.
+The SysElevenStack orchestration service is built on the OpenStack Heat project.
+
+It orchestrates multiple composite cloud applications by using the OpenStack native HOT template format. It can be seen as an overlay template specification, which through a native REST API can configure the underlying SysEleven Stack services.
 
 You can use the orchestration service both via our public OpenStack API endpoints, as well as using the [Dashboard](https://dashboard.cloud.syseleven.net)
 
