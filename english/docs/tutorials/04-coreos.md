@@ -4,13 +4,13 @@
 
 ## Goal
 
-* Wir werden eine minimale CoreOS Instanz im SysEleven Stack starten.
-* Außerdem laden wir das aktuellste CoreOS image hoch
+* We will start a minimal CoreOS instance on the SysEleven Stack.
+* Also we will upload the current CoreOS stable image.
 
 ## Prerequisites 
 
-* Der Umgang mit einfachen Heat-Templates, wie in den ersten Schritten gezeigt, wird vorausgesetzt.
-* Grundlagen zur Bedienung des OpenStack CLI (Umgebungsvariablen gesetzt, wie im [Kickstart-Tutorial](02-kickstart/) beschrieben.
+* You should be able to use simple heat templates, like shown in the [first steps tutorial](01-firststeps/).
+* You know the basics of using the OpenStack CLI (Environment variables are set, like shown in the [Kickstart-Tutorial](02-kickstart/).
 
 ## 1. Clone example repository
 
