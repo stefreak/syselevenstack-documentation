@@ -1,83 +1,56 @@
-# Using CoreOS and Containers in the SysEleven Stack
+# Minimal CoreOS Setup
 
-## Requirements
+[TOC]
 
-For this tutorial you will need to use `python-openstackclient`:
+## Goal
 
-```
-pip install python-openstackclient
-```
+* Wir werden eine minimale CoreOS Instanz im SysEleven Stack starten.
+* Außerdem laden wir das aktuellste CoreOS image hoch
 
-You will also need to set the required environment variables to use the OpenStack API, as described in [our kickstart tutorial](https://doc.syselevenstack.com/tutorials/02-kickstart/#umgebungsvariablen-in-die-shell-session-einlesen).
+## Prerequisites 
 
-You also need to have a public SSH key uploaded to the SysEleven Stack.
+* Der Umgang mit einfachen Heat-Templates, wie in den ersten Schritten gezeigt, wird vorausgesetzt.
+* Grundlagen zur Bedienung des OpenStack CLI (Umgebungsvariablen gesetzt, wie im [Kickstart-Tutorial](02-kickstart/) beschrieben.
 
-### Starting CoreOS in the SysEleven Stack
+## 1. Clone example repository
 
-Step one: Upload the latest CoreOS image
-
-```
-eval $(curl https://stable.release.core-os.net/amd64-usr/current/version.txt)
-wget https://stable.release.core-os.net/amd64-usr/$COREOS_VERSION/coreos_production_openstack_image.img.bz2
-openstack image create --container-format bare --disk-format qcow2 --file coreos_production_openstack_image.img.bz2 "CoreOS $COREOS_VERSION"
-+------------------+------------------------------------------------------+
-| Field            | Value                                                |
-+------------------+------------------------------------------------------+
-| checksum         | 0244e1b3420b7c170e27197eed0d0025                     |
-| container_format | bare                                                 |
-| created_at       | 2016-11-03T16:01:11Z                                 |
-| disk_format      | qcow2                                                |
-| file             | /v2/images/0882e2a7-aa27-46e6-affe-8c701dc250f5/file |
-| id               | 0882e2a7-aa27-46e6-affe-8c701dc250f5                 |
-| min_disk         | 0                                                    |
-| min_ram          | 0                                                    |
-| name             | CoreOS 1185.3.0                                      |
-| owner            | 2b64d96fb0434283822a1f88f00993f9                     |
-| protected        | False                                                |
-| schema           | /v2/schemas/image                                    |
-| size             | 258548177                                            |
-| status           | active                                               |
-| tags             |                                                      |
-| updated_at       | 2016-11-03T16:01:14Z                                 |
-| virtual_size     | None                                                 |
-| visibility       | private                                              |
-+------------------+------------------------------------------------------+
-```
-
-You can configure CoreOS using User-Data. Here is an example showing how to start an NGINX docker container after boot:
+We will be working with the files in our "[heattemplates-examples](https://github.com/syseleven/heattemplates-examples)" repository on github. Please clone it.
 
 ```
-#cloud-config
-
-coreos:
-  units:
-    - name: "docker-apache.service"
-      command: "start"
-      content: |
-        [Unit]
-        Description=Nginx container
-        Author=Me
-        After=docker.service
-
-        [Service]
-        Restart=always
-        ExecStartPre=-/usr/bin/docker kill nginx
-        ExecStartPre=-/usr/bin/docker rm nginx
-        ExecStartPre=/usr/bin/docker pull nginx
-        ExecStart=/usr/bin/docker run --rm --name nginx -p 80:80 nginx
-        ExecStop=/usr/bin/docker stop nginx
+$ git clone https://github.com/syseleven/heattemplates-examples
+$ cd heattemplates-examples/coreOS
 ```
 
-Save this to a file called [```user-data```](../img/user-data-coreos).
+## 2. Upload CoreOS image
 
-With this file, the following command will launch a compute instance which will start the NGINX container. It will be reachable via port 80:
+Upload the CoreOS image to SysEleven Stack.
 
 ```
-openstack server create --image 0882e2a7-aa27-46e6-affe-8c701dc250f5 --flavor m1.micro --user-data user-data --security-group default --nic 'net-id=aec02c14-5659-4eae-a267-501a28e672b4' --key-name 'mykey' coreos-nginx
+$ ./upload_replacing_coreos_image.sh
 ```
 
-### Finalizing the setup and testing it
+This helper script downloads the [official stable CoreOS image](https://coreos.com/os/docs/latest/booting-on-openstack.html), deletes existing images on your SysEleven Stack named `private_coreos` and uploads the new image. 
 
-* ```ip floating create ext-net``` provides you with a floating IP you can use to make the container reachable over the internet.
-* ```ip floating add <floating-IP> coreos-nginx``` assigns the floating IP to the compute instance you just started.
-* ```curl http://<floating-IP>``` should now show you the welcome page of the NGINX web server.
+## 3. Start CoreOS instances
+
+```
+$ openstack stack create -t cluster.yaml <stack name> --parameter key_name=<ssh key name> --wait
+```
+
+key_name references an SSH-Key that you created in the [First Steps Tutorial](01-firststeps/#importing-your-ssh-key).
+
+Using the optional parameter `number_instances` (default: 1) you can start multiple instances.
+
+## Conclusion
+
+Now one or more CoreOS instances should run on the SysEleven Stack. Each one is accessible using a public FloatingIP. On port 80 an Nginx, running inside of a docker container, should respond to HTTP requests.
+
+Command for checking this:
+`curl <ip-address>` (Should show the Nginx welcome page)
+
+For a High Availability Cluster we are still missing some stuff. More advanced setups are explained further in the links below.
+
+## Links/Examples
+
+* [CoreOS cluster discovery](https://coreos.com/os/docs/latest/cluster-discovery.html)
+* [Running a High Availability Docker Swarm](http://tech.paulcz.net/2016/01/running-ha-docker-swarm/)
