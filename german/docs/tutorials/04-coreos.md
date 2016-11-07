@@ -9,7 +9,7 @@
 
 ## Vorraussetzungen 
 
-* Der Umgang mit einfachen Heat-Templates, wie in den ersten Schritten gezeigt, wird vorausgesetzt.
+* Der Umgang mit einfachen Heat-Templates, wie [in den ersten Schritten](01-firststeps/) gezeigt, wird vorausgesetzt.
 * Grundlagen zur Bedienung des OpenStack CLI (Umgebungsvariablen gesetzt, wie im [Kickstart-Tutorial](02-kickstart/) beschrieben.
 
 ## 1. Beispielprojekt laden
@@ -43,9 +43,9 @@ Der Optionale Parameter `number_instances` kann angegeben werden, wenn mehr als 
 
 ## Conclusio: was haben wir erreicht?
 
-Jetzt sollten eine oder mehrere CoreOS Instanzen auf dem SysEleven Stack laufen. Jede ist durch eine öffentliche FloatingIP erreichbar und ein Nginx, in einem Docker Container laufend, antwortet auf Port 80.
+Jetzt sollten eine oder mehrere CoreOS Instanzen auf dem SysEleven Stack laufen. Jede ist durch eine öffentliche FloatingIP erreichbar.
 
-Zum überprüfen:
+Ein Nginx sollte, in einem Docker Container laufend, auf Port 80 antworten. Zum überprüfen:
 `curl <IP-Adresse>` (Sollte uns eine Nginx-Willkommensseite anzeigen)
 
 Für ein hochverfügbares Cluster fehlen noch einige Dinge, die in den weiterführenden Links erläutert werden.

@@ -43,8 +43,9 @@ Using the optional parameter `number_instances` (default: 1) you can start multi
 
 ## Conclusion
 
-Now one or more CoreOS instances should run on the SysEleven Stack. Each one is accessible using a public FloatingIP. On port 80 an Nginx, running inside of a docker container, should respond to HTTP requests.
+Now one or more CoreOS instances should run on the SysEleven Stack. Each one is accessible using a public FloatingIP.
 
+Inside of each CoreOS instance nginx was deployed as a docker container, listening on port 80. 
 Command for checking this:
 `curl <ip-address>` (Should show the Nginx welcome page)
 
