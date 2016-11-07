@@ -2,19 +2,37 @@
 
 [TOC]
 
-The SysElevenStack orchestration service is based on the OpenStack Heat project.
+Der SysEleven Stack Orchestration Service basiert auf dem OpenStack Heat Projekt.
 
-You can use the orchestration service both via our public OpenStack API endpoints, as well as using the [Dashboard](https://dashboard.cloud.syseleven.net)
+Sowohl via unserer öffentlichen OpenStack API, als auch durch das SysEleven Stack Dashboard können Stacks verwaltet werden.
 
-With the orchestration service you can do more than just start and stop virtual machines: You have control over your stack's network, storage, security groups, as well as your virtual machines. To run web services successcully on the SysEleven Stack, these components need to be known and orchestrated.
+Die Kontrolle, die der SysElevenStack dem Nutzer bietet, geht weit über das
+Starten und Stoppen einer virtuellen Maschine hinaus. Der Nutzer des SysEleven
+Stacks kontrolliert das Netzwerk seiner Umgebung, die Bereitstellung von
+virtuellem Speicher, die Erstellung von Sicherheitsrichtlinien innerhalb eines
+Projektes und eben auch die virtuellen Maschinen selbst.  Damit erfolgreich
+Webservices im SysEleven Stack betrieben werden können, müssen diese einzelnen
+Bestandteile bekannt sein.  
 
-## Network
+## Netzwerk
 
-It is technically possible to run virtual machines without a network, but the majority of applications need connectivity. In OpenStack there are five kinds of objects that are necessary to define a network: *Networks*, *Subnets*, *Ports*, *Routers*, as well as *Floating IPs*.
+Ich kann zwar in OpenStack virtuelle Maschinen ohne Netzwerk betreiben; für das
+Gros der Anwendungen werde ich allerdings Netzwerk brauchen. In OpenStack gibt
+es fünf Objekte, die im Netzwerksegment wichtig sind: Netzwerke, Subnetze,
+Ports und Router sowie sogenannte Floating-IPs. 
 
-*Networks* are a kind of container for one or more *Subnets* A *Subnet* is the network actually used by a stack to route traffic from and to the outside world. A virtual machine without a *Subnet* will not be able to talk to the outside world.
+Netzwerke sind vorzustellen als Container, die einen Rahmen bilden, um darin
+ein- oder mehrere Subnetze zu betreiben. Subnetze sind in der
+Netzwerkarchitektur von OpenStack die tatsächlich genutzten Netzwerke, über die
+Traffic von der Aussenwelt in den Server geroutet wird und auch zurück. Ohne
+Subnetz wird also eine virtuelle Maschine keine Verbindung zur Aussenwelt
+bekommen. 
 
-Please keep in mind that in OpenStack everything is an *Object* or *Resource* which you can manage via an API. This means you can define a network as part of a Heat stack. As an example, you could create a file named `net.yaml` with the following content:
+Es ist wichtig, sich vor Augen zu halten, dass alles in OpenStack ein Objekt
+bzw. eine Ressource ist, das über APIs verwaltet werden kann. Das heißt, dass
+ich beliebige Komponenten als Heat-Stack formulieren und starten kann. Am
+Beispiel Netzwerk manchen wir das kurz in der Praxis, indem wir uns eine Datei
+names `net.yaml` mit folgendem Inhalt anlegen:
 
 ```
 heat_template_version: 2014-10-16
@@ -37,21 +55,30 @@ resources:
       - {start: 10.0.0.10, end: 10.0.0.250}
 ```
 
-Now, create this network by running
+Das Beispiel starten wir mit 
 
 ```
 heat stack-create -f net.yaml netexample1
 ```
 
-If you now open the [Dashboard](https://dashboard.cloud.syseleven.net), you will see that you just made a piece of infrastructure: In the *Network* tab you see the network and subnet as defined in `net.yaml`. We do not need this network, so we clean it up with the following command:
+Wenn wir nun in die Weboberfläche zurück wechseln, sehen wir, dass wir ein
+Stück Infrastruktur geschaffen haben: Im Bereich Netzwerk taucht nun ein
+weiteres Netzwerk und ein Subnetz auf. Den Baustein brauchen wir aktuell nicht,
+also löschen wir ihn mit folgenden Befehl:
 
 ```
 heat stack-delete netexample1
 ```
 
-Aside from *Networks* and *Subnets*, *Routers* are basic building blocks of an infrastructure stack. You need routers to connect your subnets to the Internet. This way you enable your virtual machines to pull updates from an upstream source, for example. You also need *Routers* so clients can reach your virtual machines from the internet. For traffic to the Internet, we use Source Network Address Translation to assign IPv4 based network traffic to the correct virtual machine.
-
-You can now expand the previous example and add a *Router*:
+Neben Netzen und Subnetzen sind Router elementare Bestandteile eines
+Infrastruktur-Stacks. Router sind Notwendig, um das öffentliche Netz, und damit
+das Internet, mit Subnetzen zu verbinden. Das ermöglicht zum einen den Zugriff
+aus der virtuellen Maschine heraus, so dass sich ein Linux-Server z.B. mit
+Updates versorgen kann. Zum anderen sind Router essentiell, damit aus dem Netz
+auf eine virtuelle Maschine zugegriffen werden kann. Für ausgehenden Traffic
+muss Source Network Address Translation (SNAT) auf dem Router aktiviert sein,
+damit IPv4-Netzwerkverkehr der korrekten Maschine zugeordnet werden kann.
+Erweitern wir das Beispiel von eben um einen Router:
 
 ```
 heat_template_version: 2014-10-16
@@ -82,7 +109,9 @@ resources:
       name: example-router
 ```
 
-This example is the first where you need a parameter: The `public_network_id`. You can get a list of available networks with public IP addresses like this:
+Wir sehen am Codebeispiel, dass erstmals ein Parameter benötigt wird: Die
+`public_network_id`. Die verfügbaren Netze mit öffentlichen IPs lassen wir uns
+kurzerhand anzeigen:
 
 ```
 syselevenstack@kickstart:~$ neutron net-list
@@ -92,17 +121,25 @@ syselevenstack@kickstart:~$ neutron net-list
 | 02fc43b8-6de5-4e26-8bc7-7e70f0f3ca1a | float2        | 6c9e0e07-f7ac-40e3-b208-febd9d8cd0b8              |
 | 4f996f76-e943-4e91-bfe2-d01b00283d86 | kickstart-net | d134c951-aaa2-4c9b-9cac-ae51b96f5533 10.0.0.0/24  |
 | 80ca1837-a461-4621-b58d-79507aa8b044 | float1        | d79b58c4-23f3-476b-82f2-e00e348d25d4              |
-+--------------------------------------+---------------+---------------------------------------------------+
+­+--------------------------------------+---------------+---------------------------------------------------+
 ```
 
-Choose one of the public networks, for this example **float1** with the ID `80ca1837-a461-4621-b58d-79507aa8b044`. Again, create the network, just with a parameter:
+Wir entscheiden uns für eines der beiden öffentlichen Netze, in diesem Fall
+float1 mit der ID `80ca1837-a461-4621-b58d-79507aa8b044` Das Objekt legen wir
+ähnlich an wie eben, nur dass jetzt ein Parameter mit angegeben wird.:
+
 ```
 heat stack-create -f net2.yaml \
                   -P public_network_id=80ca1837-a461-4621-b58d-79507aa8b044 \
                   netexample2
 ```
 
-You can check in the [Dashboard](https://dashboard.cloud.syseleven.net) under "Network Topology" to see that the object was created correctly. You can also see that *Network* and *Router* are independent objects. To connect both objects you need an additional object that does just that: A *Router-Subnet-Connect*. Here is the code to add this piece of infrastructure:
+Wir können wieder in der Weboberfläche unter dem Punkt "Network topology"
+feststellen, dass das Objekt korrekt angelegt wurde. Was wir aber auch sehen
+können ist, dass sowohl Router als auch Netzwerk eigenständige isolierte
+Objekte sind. Damit beide Objekte verbunden sind, muss ein Objekt angelegt
+werden, dass genau das tut: Ein Router-Subnet-Connect. Hier der Code, um diese
+Infrastruktur zu starten:
 
 ```
 parameters:
@@ -138,7 +175,7 @@ resources:
       subnet: { get_resource: subnet }
 ```
 
-If you start this template with the following command:
+Wenn wir dieses Template mit folgendem Code starten:
 
 ```
 heat stack-create -f net3.yaml \
@@ -146,9 +183,17 @@ heat stack-create -f net3.yaml \
                   netexample3
 ```
 
-You can see in the [Dashboard](https://dashboard.cloud.syseleven.net) that you created a private network `example-net`, which is connected to the public network `float1` through a Router. 
+sehen wir in der Weboberfläche, dass nun ein privates Netzwerk enstanden ist
+(example-net), das mit dem öffentlichen Netzwerk (float1) durch einen Router
+verbunden ist.
 
-Using this infrastructure we can now start a virtual machine which has an outside network connections. All that is missing is a way to assign a virtual machine to a given subnet. This is done using *Ports*. *Ports* are the network interfaces of a virtual machine: A *Port* needs to be connected to a *Subnet* for the virtual machine to be able to use it. Here is the code to connect a *Port* to a *Subnet*:
+Mit dieser Infrastruktur sind wir nun in der Lage, eine virtuelle Maschine zu
+starten, die Netzwerkverbindung nach aussen hat. Wie allerdings ordne ich eine
+VM einem bestimmten Subnetz zu? Die fehlenden Bausteine hier sind "Ports".
+Ports sind die Netzwerkschnittstellen einer virtuellen Maschine; einen Port
+muss also mit einem Subnetz verbunden werden, damit die Maschine sich in das
+Netz integriert. Der Code, der den Port mit einem Subnetz verknüpft, sieht z.B.
+so aus:
 
 ```
   port:
@@ -157,7 +202,9 @@ Using this infrastructure we can now start a virtual machine which has an outsid
       network_id: { get_resource: net}
 ```
 
-Now you have defined and created the major parts of an orchestrated setup. Next, you start a virtual machine that uses the infrastructure created so far::
+Damit haben wir einen großen Teil unserer ersten virtuellen Infrastruktur
+zusammen. Es ist also an der Zeit, eine virtuelle Maschine zu starten und dabei
+unsere neu geschaffene Ad-Hoc Infrastruktur zu nutzen:
 
 ```
 heat_template_version: 2014-10-16
@@ -217,9 +264,19 @@ resources:
       subnet: { get_resource: subnet }
 ```
 
-You can use this template as usual, only that you reference the public SSH Key you stored in the Dashboard using the command line switch `-Pkey_name=<PubKeyName>` This ensures that you can log in to the default account on your virtual machine using SSH.
+Dieses Template starten wir wie gehabt, nur dass wir mittels `-P
+key_name=<PubKeyName>` unseren in OpenStack hinterlegten öffentlichen SSH-Key
+per Name referenzieren. Damit sorgen wir dafür, dass für den Standard-User der
+virtuellen Maschine unser SSH-Key eingespielt wird und wir Zugriff erhalten. 
 
-In the [Dashboard](https://dashboard.cloud.syseleven.net) you can see the network being built. You also see the subnet and router are created and all objects will be connected. We cannot connect to our virtual machine though: The setup is missing a publically accessible IP address. The missing object is a *Floating IP*, another object we need to connect with our *Port*. When that's done, we have a virtual machine that is reachable from the Internet. Here is the necessary orchestration code:
+Wir sehen in der Weboberfläche, dass das Netzwerk gebaut wird. Wir sehen auch,
+dass ein Netzwerk, ein Subnetz und ein Router angelegt werden und alle
+Bausteine miteinander verknüpft werden. Verbinden können wir uns allerdings
+noch nicht auf unsere virtuelle Maschine: uns fehlt eine aus dem Internet
+erreichbare öffentliche IP-Adresse. Das fehlende Bindeglied ist schnell
+integriert: Wir legen ein Floating-IP-Objekt an und verbinden dieses mit
+unserem Netzwerk-Port. Und siehe da: die in diesem Stack erzeugt Maschine
+besitzt eine öffentliche IP. Hier der Code dazu:
 
 ```
 heat_template_version: 2014-10-16
@@ -287,11 +344,27 @@ resources:
 
 ## Security Groups
 
-But even then, attempts to connect to the machine will fail both in the browser or via SSH. What is missing? You need to decide how your virtual machine should be used and allow network traffic to flow accordingly. The default security policy in the SysEleven Stack forbids all traffic coming from the Internet. This is a good practice to ensure stacks are secure by default and you do not expose internal systems, i.e. a database server, to the Internet accidentally.
-
-You can change that policy easily by adding another object: A *Security Group*. Security groups are similar to simple firewalls: You need to define the protocol, maybe a port or port range, and the source and target IP addresses or address ranges, as well as the direction of traffic. Incoming traffic is called *ingress*, outgoing traffic *egress*. 
-
-If you now start your stack, all objects are successfully combined and your first virtual machine is live! Do not worry, future machines will be less complicated to bring up, since you will build a collection of templates that cover your use cases. Here is the full orchestration template that allows you to start the minimal example we built so far:
+Doch auch, wenn wir uns jetzt auf die Maschine verbinden, scheitern wir mit
+einem Timeout im Browser bzw. bei dem Versuch, per SSH eine Verbindung zum Host
+aufzubauen. Was fehlt? Wir müssen uns überlegen, welchem Zweck die Maschine
+dienen soll, die wir starten und daraufhin den entsprechenden Netzwerkverkehr
+erlauben. Im SysEleven Stack ist die Standard-Sicherheitsrichlinie, alle
+Verbindungen aus dem Internet auf eine virtuelle Maschine zu unterbinden. Das
+ist gut und richtig so, damit wir geschützte Umgebungen betreiben können und
+beispielsweise ein Datenbankserver nicht einfach aus dem Internet erreichbar
+ist. Es ist auch kein großes Problem, das letzte Bindeglied unserem Setup
+hinzuzufügen: Eine Security Group. Security Groups folgen von der Bedienung her
+den gängigen Regeln einer Firewall, wie sie bespielsweise unter Linux mit
+Iptables implementiert ist. D.h., es muss das Protokoll (TCP/UDP/ICMP), ggf.
+der Port-Range und Quell- und Zieladressräume definiert werden. Ebenfalls muss
+die Fließrichtung des Netzwerkverkehrs angegeben werden, für den diese Regel
+gilt: Eingehender Verkehr wird mit *Ingress* bezeichnet, ausgehender Verkehr
+mit *Egress*. Starten wir nun unseren Stack, haben wir alle Bausteine
+erfolgreich verknüpft und haben unsere erste Maschine live! Keine Angst, der
+hier betriebene Aufwand wiederholt sich nicht mit jeder Installation einer
+Maschine. Alles, was wir brauchen, ist eine Bibliothek mit Templates, die
+unsere Anwendungsfälle abdeckt. Hier der Code, der unsere minimale sinnvolle
+Infrastruktur startet:
 
 ```
 heat_template_version: 2014-10-16
@@ -366,28 +439,53 @@ resources:
         - { direction: ingress, remote_ip_prefix: 0.0.0.0/0, protocol: icmp }
 ```
 
-After creation has finished, you can log in to the virtual machine. Find it's IP address with the following command:
+Jetzt können wir uns erfolgreich in der virtuellen Maschine einloggen. Dafür lassen wir uns die IP-Adresse der Maschine anzeigen:
 
 ```
 nova list
 ```
 
-Copy the IP address and log into the virtual machine:
+Diese IP-Adresse kopieren wir uns und loggen uns ein:
+
 ```
 ssh ec2-user@<IP-Adresse>
 ```
 
-In Ubuntu cloud images, `ec2-user` is the default name of the default user account.
-
-You got to know the network and virtual machine parts of orchestration. You do not need anything else to run a simple stack. But many web applications have operational constraints we did not cover yet: What happens if you need to change the size or number of our virtual machines? How do you preserve and find my data if I delete my stack as shown above? You can find answers to these questions in the [Block Storage documentation](../block-storage). Every virtual machine currently comes with 50 Gigabytes of storage. If you need additional storage, you need to create and use volumes. Volumes are also interesting from another point of view: If you want to preserve data beyond the life time of a virtual machine (for example a database for a web application), you need to use volumes. The storage that comes with a virtual machine is *ephemeral*: it is lost when the virtual machine is deleted. To provide long lasting storage, create a stack to create and provide a volume of the required storage size.
+Der ec2-user ist der Standard-User aus Ubuntu-Cloudimages, so lange nichts anderes konfiguriert wurde.
+ 
+Wir haben nun die Bausteine Netzwerk und virtuelle Maschinen gezeigt. Das ist
+im Prinzip alles, was wir für den Betrieb eines einfachen Setups brauchen. Doch
+ganz so anspruchslos sind meist auch die einfachsten Hosting-Projekte nicht:
+Was passiert, wenn unsere Maschine größer werden soll als der eingestellte
+Flavor? und wo sind meine Daten, die ich in der Maschine aufgebaut habe, wenn
+ich den Stack lösche, wie ich es gelernt habe? Die Antwort auf beide Fragen
+findet sich im Bereich "Storage". Jede Maschine im Syseleven Stack wird derzeit
+mit einer Größe von 50GB Storage ausgeliefert. Brauche ich zusätzlichen
+Speicher, muss ich auf sogenannte Volumes zurückgreifen. Doch auch aus einer
+anderen Überlegung heraus sind Volumes interessant: Wenn ich meine Maschine
+löschen und dennoch meine Daten erhalten möchte (beispielsweise die Daten
+meiner Datenbank), kann ich dies mit Volumes erreichen. Während der Speicher
+einer VM also als vergänglich, ephemeral, bezeichnet werden kann, kann ich
+Volumes als persistenten Speicher nutzen, der über den Zeitraum der Existenz
+eines Stacks hinaus zur Verfügung steht. Dafür lege ich mir am besten einen
+eigenen Stack an, der als einzige Aufgabe hat, mein Volume in der gewünschten
+Größe anzulegen. 
 
 <!--- TODO: Code fehlt. -->
 ```
 ```
 
-Using a storage template, you get a volume with a UID. You can pass this UID to a virtual machine using a parameter, where the volume will show up as an additional block device, just like an additional hard disk. Using that block device, data can be stored persistently.
+Wenn ich dieses Template starte, erhalte ich ein Volume mit einer UID. Diese
+UID kann ich, über Parameter gesteuert, an mein Template der virtuellen
+Maschine übergeben. In der virtuellen Maschine taucht nun ein weiteres
+Blockdevice, also im Grunde eine weitere Festplatte, auf. So habe ich eine
+Lösung für die Persistenz meiner Daten. 
 
-You can also build a setup where a virtual machine has more than 50Gigabytes of storage. In that case you do not need to create the volume in a separate stack, you can just expand the orchestration template for your virtual machine. A complete setup would look like this:
+Ebenfalls lässt sich so ein Setup realisieren, bei dem eine virtuelle Maschine
+mehr Speicherplatz zur Verfügung gestellt bekommt, als die 50GB des
+Grundsystems. Hier bietet es sich jedoch an, das Volume nicht separiert zu
+erstellen, sondern in dem Stack, in dem die Maschine selbst auch erstellt wird.
+Ein vollständiges Setup sieht dann so aus:
 
 <!--- TODO: Code fehlt. -->
 ```
