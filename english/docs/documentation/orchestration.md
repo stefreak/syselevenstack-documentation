@@ -395,45 +395,42 @@ You can also build a setup where a virtual machine has more than 50Gigabytes of 
 ```
 ```
 
-## Bestandteile eines Heat-Templates.
+## Composition of Heat templates
 
-Wie ist ein Heat-Template, mit dem ich jeden Aspekt meiner Infrastruktur
-beschreiben kann, aufgebaut? Die Dateien, die die virtuelle Infrastruktur
-beschreiben, sind in YAML geschrieben. Sie sind unterteilt in fünf Sektionen:
-`heat_template_version`, `description`, `parameters`, `resources` und `output`.
-Die aktuelle Spezifikation aller Heat-Bestandteile und Optionen findet sich
-online in der [Online-Dokumentation des Heat-Projekts](http://docs.openstack.org/developer/heat/template_guide/openstack.html)
+Heat template files are written in YAML and describe the virtual infrastructure. They consist of five important sections:
+`heat_template_version`, `description`, `parameters`, `resources` and `output`.
+You can find the current specification of all heat components and options at the [Heat Project online documentation](http://docs.openstack.org/developer/heat/template_guide/openstack.html).
 
-### Heat-Version
+### Heat version
 
 ```
 heat_template_version: 2014-10-16
 ```
 
-Ein Heat-Template wird eingeleitet mit der Versionsnummer der
-Beschreibungssprache selbst; d.h. in dieser Zeile wird festgelegt, welches Set
-von Features in den Templates verwendet werden kann und in welcher Notation.
-Da die Sprache selbst sich von Release zu Release ändert, ist diese Zeile
-erforderlich.
+Every heat template starts with the version number of the language. This line specifies which set of features can be used and which notation is needed to express the infrastructure.
+
+Because the language changes from release to release, this line is necessary to keep up backwards compatibility.
 
 ### Description
 
-Eine Beschreibung eines Heat-Stacks ist sinnvoll, aber optional. Sinnvoll ist
-sie auch deshalb, weil der Text aus dieser Sektion in der OpenStack-Datenbank
-abgelegt wird und daher die hier enthaltenen Informationen abrufbar sind, wenn
-der Stack gestartet ist. 
+```
+description: Describe what the heat stack does using this field
+```
 
-### Parameter
+The description section is optional, but we still recommend it. The text in this section is also stored in the OpenStack database and it will show up in the UI and CLI.
 
-Mit der Parametrisierung eines Heat-Stacks wird die Wiederverwendbarkeit
-erhöht: Wenn ich für ein Kundenprojekt eine sinnvolle Umgebung definiert habe,
-kann ich mit leichten Anpassungen die selbe Umgebung ein weiteres Mal starten.
-Hierzu dienen Parameter. Parameter werden in dieser Sektion deklariert.
-Definiert werden sie entweder als Übergebene Argumente auf der Kommandozeile
-(mit dem Schalter `-P <Parameter>=<Wert>`, in einem sogenannten
-Environment-File, oder im Fall modular aufgebauter Heat-Stacks in dem
-Eltern-Modul für das Kind-Modul als Übergabewert.  Die Deklaration sieht so
-aus:
+### Parameters
+
+Using parameters, you can increase reusability of a heat stack.
+If, for example, we have a working environment defined for a client project, using parameters we can start the same environment a second time for another client.
+
+Parameters can be defined in three ways:
+
+* from the CLI (using the switch `-P parameter_name=value`)
+* in an environment file
+* if you split your heat stacks into modules, the parent can pass parameters to the child module.
+
+Declaring parameters looks like this:
 
 ``` 
 parameters:
@@ -442,16 +439,15 @@ parameters:
     default: 4
 ```
 
-Wie man sieht, kann ein optionaler Default angegeben werden. Wenn dieser
-gesetzt ist, wird ein Parameter optional. Andersherum formuliert: Gibt es
-keinen Default, wird der Parameter erzwungen, wenn man den Heat-Stack starten
-möchte. Das ist beispielsweise dann sinnvoll, wenn ein Storage-Volume über
-einen Parameter eingebunden werden soll, da die UID des Volumes nicht im
-Vorhinein bekannt ist.
+As you can see it is also possible to define a default value. If it is set, a parameter becomes optional and the default value will be used if it was not set from the outside.
+
+If a parameter has no default, you are forced to provide the parameter when starting the heatstack. This can be useful for example if you need to mount a shared storage volume because the UUID of the volume is not known in advance.
 
 ### Resources
 
-Die Resources-Sektion ist die wichtigste in einem Template: An dieser Stelle wird festgelegt, was überhaupt gebaut werden soll. Eine Resource kann ein beliebiges Objekt in OpenStack sein.  Sehr oft geht es darum, verschiedene Resourcen nicht nur anzulegen, sondern miteinandander sinnvol zu verknüpfen. Ein Beispiel: Damit eine virtuelle Maschine Netzwerk bekommt, muss sie mit einem Port (das virtuelle Äquivalent zu einer Netzwerkkarte) verknüpft werden. Diese Verknüpfung geschieht, indem innerhalb der Maschinendefinition mittels “get_resource” auf die Port-Ressource verwiesen wird:
+The resource section is the most importnat one of a template. It defines, what exactly should be built. A resource can be any object in OpenStack. Most of the time the resource section is not only about creating resources, but also about connecting them in a way that makes sense.
+
+As an example: for a virtual machine to get network access, it must be attached to a port (the virtual counterpart to a network interface card). You can do that by referencing the port resource using `get_resource` from the virtual machine:
 
 ```
 resources:
@@ -465,15 +461,14 @@ resources:
 - port: { get_resource: example_port }
 
 ```
-Wie an diesem Beispiel zu sehen ist, gibt es noch eine andere häufig genutzte Referenzierung: Mit “get_param” wir auf den Inhalt der Parameter zugegriffen, die in der Parameterdeklaration eingeführt und deren Inhalt definiert wurde.
+
+In this example you can also see another popular way of referencing things: Using `get_param` you can get the content of one of the parameters defined in the parameters section.
 
 ### Output
 
-Die Output-Sektion liefert die Möglichkeit, Parameterwerte auch nach dem
-Anlegen eines Stacks abrufen zu können; sie ist völlig optional. Der Aufbau ist
-einfach: einem Parameter-Namen folgt der Wert, mit dem der Parameter befüllt
-werden soll. So kann beispielsweise eine Floating-IP in der Beschreibung eines
-Stacks gespeichert werden:
+Using the output section you can access attributes of stack components easily after creating the stack. It is entirely optional.
+
+After specifying the parameter name you only need to specify the value of the parameter. For example you can save a floating IP or the description of a stack:
 
 ```
 outputs:
@@ -484,9 +479,9 @@ outputs:
 
 ## FAQ
 
-### Ich benutze ein Ubuntu ab 15.xx und es fehlt die Default Route
+### I am using Ubuntu from 15.xx and the default route is missing
 
-Ubuntu benutzt seit 15.04 eine RFC-konforme Implementierung von DHCP. Das Software Defined Network schickt keine Default Route mit, daher muss diese explizit mit host_routes gesetzt werden. Wir arbeiten mit dem Hersteller an einer Lösung. Mit der folgenden Konfiguration kann das Problem umgangen werden. Hier ein Beispiel für das Subnet 10.0.0.0/24 mit 10.0.0.1 als Standard Gateway:
+Since 15.04, Ubuntu uses an RFC conform implementation of DHCP. The software defined network does not send a default route by default, therefore it must be explicitly set using `host_routes`. We are currently working with the manufacturer on a solution. Using the following configuration you can work around this problem. Following is an example for the subnet 10.0.0.0/24 with 10.0.0.1 as the default gateway.
 
 ```
   subnet:
@@ -506,16 +501,13 @@ Ubuntu benutzt seit 15.04 eine RFC-konforme Implementierung von DHCP. Das Softwa
       - {start: 10.0.0.10, end: 10.0.0.250}
 ```
 
-### Mein Stack lässt sich nicht mehr löschen! Was kann ich tun?
+### I cannot delete my stack anymore! What can I do now?
 
-Ein Heat-Stack folgt beim Aufbau Abhängigkeiten, die Objekte untereinander in eine bestimmte Reihenfolge bringen. Die Dependencies werden beim Rückbau eines Stack ebenfalls berücksichtigt, so dass man ein Fehlschlagen des Löschens damit umgehen kann. Ist ein Stack ohne Angabe der Dependencies aufgebaut, schlägt das Löschen gerne mit einer Fehlermeldung wie dieser Fehl:
+A heat stack follows a chain of dependencies on creation, to bring a certain order into the creation of objects. It will also respect this order on removing the stack. By specifying specific dependencies you can work around the failure. If you forgot to specify dependencies, deletion often fails with an error message similar to this one:
 
 ```
 Resource DELETE failed: Conflict: resources.router_subnet_connect: Router interface for subnet eaa5a91f-3f45-43cf-8714-95118aabc64c on router 487a984c-692c-4d45-80d2-2e0ee92b505d cannot be deleted, as it is required by one or more floating IPs. 
 ```
 
-In diesem Fall ist die saubere Lösung, die Abhängigkeiten von Hand zu löschen. Also erst die Floating-IP, die an dem Router hängt, dann den Router selbst und danach den ganzen Stack. Oft reicht es auch, den ``heat stack-delete <stackName>`` mehrfach aufzurufen.
-Die Angabe im Heat-Template ``depends_on: <myOtherResourceID>`` vermeidet diese Probleme.
-
-
-
+In this case a clean solution is to delete the dependencies by hand - for example first delete the floating IP that is attached to the router, then delete the router and then the whole stack. Oftentimes you can also just call ``heat stack-delete <stackName>`` multiple times.
+Again, by specifying ``depends_on: <myOtherResourceID>`` you can avoid this class of problem entirely.
