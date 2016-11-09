@@ -37,7 +37,7 @@ To create a new interface on our router:
 
 Repeat the process with the other router.
 
-![Interface Übersicht](../img/router-interface.png)
+![Interface Overview](../img/router-interface.png)
 
 #### Step Three: Add a Static Route
 
@@ -49,7 +49,7 @@ To add a static route:
 
 Repeat the process with the other router
 
-![Interface Übersicht](../img/static-route.png)
+![Interface Overview](../img/static-route.png)
 
 #### Step Four: Creating the Host Route
 
