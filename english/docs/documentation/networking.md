@@ -49,7 +49,7 @@ To add a static route:
 
 Repeat the process with the other router
 
-[Interface Übersicht](../img/static-route.png)
+![Interface Übersicht](../img/static-route.png)
 
 #### Step Four: Creating the Host Route
 
