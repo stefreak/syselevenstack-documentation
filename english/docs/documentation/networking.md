@@ -29,6 +29,7 @@ Sign in at the  [Dashboard](https://dashboard.cloud.syseleven.net)
 #### Step Two: Create Interface on Router
 
 To create a new interface on our router:
+
 * Click on the left side bar, then "Network" --> "Router".
 * Click on the first router you want to establish a connection with.
 * In the new window, under "Interfaces", click on "Add Interfaces".
@@ -42,6 +43,7 @@ Repeat the process with the other router.
 #### Step Three: Add a Static Route
 
 To add a static route:
+
 * Click on the left side bar, then "Network" --> "Router".
 * Click on the first router you want to establish a connection with.
 * Click on "Static Route"
@@ -54,6 +56,7 @@ Repeat the process with the other router
 #### Step Four: Creating the Host Route
 
 To create the host route:
+
 * Click on the left side bar, then "Network", then the network you want to share.
 * Click on the subnet you want to connect to
 * Click on "Edit Subnet" and go to "Subnet Details".
@@ -67,6 +70,5 @@ Repeat the process with the other subnet.
 
 #### Conclusion
 
-You connected two subnets, so they can communicate with another.
-
+You connected two subnets, so they can communicate with another.<br>
 You also set up our own host routes and got to know the networking settings in the dashboard.
