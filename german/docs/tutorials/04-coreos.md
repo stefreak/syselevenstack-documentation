@@ -41,7 +41,7 @@ key_name referenziert einen SSH-Key, der wie im [Erste-Schritte-Tutorial](01-fir
 
 Der Optionale Parameter `number_instances` kann angegeben werden, wenn mehr als eine Instanz hochgefahren werden soll.
 
-## Conclusio: was haben wir erreicht?
+## Conclusio: Was haben wir erreicht?
 
 Jetzt sollten eine oder mehrere CoreOS Instanzen auf dem SysEleven Stack laufen. Jede ist durch eine öffentliche FloatingIP erreichbar.
 
