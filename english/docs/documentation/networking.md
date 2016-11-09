@@ -57,7 +57,7 @@ To create the host route:
 * Click on the left side bar, then "Network", then the network you want to share.
 * Click on the subnet you want to connect to
 * Click on "Edit Subnet" and go to "Subnet Details".
-* Under "Host Routes" we can now set the right route.
+* Under "Host Routes" we can now set the route.
 * Specify the ip range (e.g. 10.0.0.0/24) and the ip address of the specific router interface.
 * Click "Submit" to save the host route
 
