@@ -29,32 +29,44 @@ Sign in at the  [Dashboard](https://dashboard.cloud.syseleven.net)
 #### Step Two: Create Interface on Router
 
 To create a new interface on our router:
-* Click on the left side bar, then "network" --> "router".
+* Click on the left side bar, then "Network" --> "Router".
 * Click on the first router you want to establish a connection with.
-* In the new window, under "interfaces", click on "add interfaces".
-* Click on the router we want to connect to and add an IP under "IP" from the related subnet. 
+* In the new window, under "Interfaces", click on "Add Interfaces".
+* Click on the router we want to connect to and add an IP under "IP" out of the ip-range from target router.
 * Click "Submit".
 
 Repeat the process with the other router.
 
-![Interface Overview](../img/hostroute.png)
+![Interface Overview](../img/router-interface.png)
 
-#### Step Three: Creating the Host Route
+#### Step Three: Add a Static Route
+
+To add a static route:
+* Click on the left side bar, then "Network" --> "Router".
+* Click on the first router you want to establish a connection with.
+* Click on "Static Route"
+* Click "Add Static Route" and enter the ip-range from the target network and as "Nexthop" the same ip-adress as in Step Two
+
+Repeat the process with the other router
+
+![Interface Overview](../img/static-route.png)
+
+#### Step Four: Creating the Host Route
 
 To create the host route:
-* Click on the left side bar, then "network", then the network you want to share.
+* Click on the left side bar, then "Network", then the network you want to share.
 * Click on the subnet you want to connect to
-* Click on "edit subnet" and go to "subnet details".
-* Under "host routes" we can now set the right route.
+* Click on "Edit Subnet" and go to "Subnet Details".
+* Under "Host Routes" we can now set the route.
 * Specify the ip range (e.g. 10.0.0.0/24) and the ip address of the specific router interface.
 * Click "Submit" to save the host route
 
 Repeat the process with the other subnet.
 
-![Interface Overview](../img/router-interface.png)
+![Interface Overview](../img/hostroute.png)
 
 #### Conclusion
 
 You connected two subnets, so they can communicate with another.
 
-You  also set up our own host routes and got to know the networking settings in the dashboard.
+You also set up our own host routes and got to know the networking settings in the dashboard.
