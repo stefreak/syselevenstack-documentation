@@ -32,7 +32,7 @@ To create a new interface on our router:
 * Click on the left side bar, then "Network" --> "Router".
 * Click on the first router you want to establish a connection with.
 * In the new window, under "Interfaces", click on "Add Interfaces".
-* Click on the router we want to connect to and add an IP under "IP" out of the ip-range from target router .
+* Click on the router we want to connect to and add an IP under "IP" out of the ip-range from target router.
 * Click "Submit".
 
 Repeat the process with the other router.
