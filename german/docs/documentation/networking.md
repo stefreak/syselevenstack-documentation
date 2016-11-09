@@ -41,7 +41,7 @@ Diese Schritte wiederholt man nun für den anderen Router.
 Der nächste Schritt ist nun eine Static Route (Statische Verbindung) anzulegen.
 * Wir begeben uns wie vorigen Schritt über "Network" -> "Routers" auf den entsprechenden Router
 * Hier klicken wir statt auf "Interfaces" auf "Static Route"
-* Nun legen wir eine Static Route über "Add Static Route" an und geben dort die IP-Range des Zielnetzes an, sowie als Nexthop die gleiche IP-Adresse wie im vorigen Schritt
+* Nun legen wir eine Static Route über "Add Static Route" an und geben dort die IP-Range des Zielnetzes an, sowie als Nexthop die gleiche IP-Adresse wie im [vorigen Schritt](https://github.com/syseleven/syselevenstack-documentation/blob/master/german/docs/documentation/networking.md#schritt-zwei-interface-im-router-anlegen)
 
 Auch das wiederholen wir für den anderen Router.
 
