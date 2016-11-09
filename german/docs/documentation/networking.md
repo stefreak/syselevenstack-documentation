@@ -45,7 +45,7 @@ Der nächste Schritt ist nun eine Static Route (Statische Verbindung) anzulegen.
 
 Auch das wiederholen wir für den anderen Router.
 
-[Interface Übersicht](../img/static-route.png)
+![Interface Übersicht](../img/static-route.png)
 
 ####Schritt Vier: Hostroute anlegen
 
