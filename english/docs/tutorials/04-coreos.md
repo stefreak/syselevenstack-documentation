@@ -4,8 +4,8 @@
 
 ## Goal
 
-* We will start a minimal CoreOS instance on the SysEleven Stack.
-* Also we will upload the current CoreOS stable image.
+* You will learn how to start a minimal CoreOS instance on the SysEleven Stack.
+* You will learn how to upload the current CoreOS stable image.
 
 ## Prerequisites 
 
@@ -14,7 +14,7 @@
 
 ## 1. Clone example repository
 
-We will be working with the files in our "[heattemplates-examples](https://github.com/syseleven/heattemplates-examples)" repository on github. Please clone it.
+You will be working with our "[heattemplates-examples](https://github.com/syseleven/heattemplates-examples)" repository on github. Your first step is to clone it:
 
 ```
 $ git clone https://github.com/syseleven/heattemplates-examples
@@ -23,7 +23,7 @@ $ cd heattemplates-examples/coreOS
 
 ## 2. Upload CoreOS image
 
-Upload the CoreOS image to SysEleven Stack.
+After you cloned the repository, upload the current stable CoreOS image to SysEleven Stack.
 
 ```
 $ ./upload_replacing_coreos_image.sh
@@ -37,19 +37,20 @@ This helper script downloads the [official stable CoreOS image](https://coreos.c
 $ openstack stack create -t cluster.yaml <stack name> --parameter key_name=<ssh key name> --wait
 ```
 
-key_name references an SSH-Key that you created in the [First Steps Tutorial](01-firststeps/#importing-your-ssh-key).
-
-Using the optional parameter `number_instances` (default: 1) you can start multiple instances.
+In this command, `key_name` references an SSH-Key that you created in the [First Steps Tutorial](01-firststeps/#importing-your-ssh-key). You can start more than one instance setting the optional parameter `number_instances`. If you do not set it, only one instance will start up.
 
 ## Conclusion
 
-Now one or more CoreOS instances should run on the SysEleven Stack. Each one is accessible using a public FloatingIP.
+You have now started one or more CoreOS instances on the SysEleven Stack. You will be able to access each one using a public floating IP address.
 
-Inside of each CoreOS instance nginx was deployed as a docker container, listening on port 80. 
-Command for checking this:
-`curl <ip-address>` (Should show the Nginx welcome page)
+Every CoreOS instance runs a docker container launching an NGINX based webserver, listening on port 80. You can check that using the following command:
 
-For a High Availability Cluster we are still missing some stuff. More advanced setups are explained further in the links below.
+`curl <ip-address>` 
+
+For every CoreOS instance, you should see the default NGINX welcome page.
+
+This setup is still missing a couple pieces to provide load balancing or high availability. Check out the links in the next section for some advanced setups you can build based on this tutorial.
+
 
 ## Links/Examples
 
