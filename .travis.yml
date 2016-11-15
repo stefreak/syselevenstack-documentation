@@ -1,5 +1,7 @@
 sudo: false
 language: ruby
+rvm:
+  - 2.2
 env:
   - DANGER_GITHUB_API_TOKEN=45df698ffa4d500ef35a3dcb726225f652151cee
 install: bundle install
