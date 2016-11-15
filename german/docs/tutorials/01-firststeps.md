@@ -40,8 +40,7 @@ uns ein unter [https://dashboard.cloud.syseleven.net](https://dashboard.cloud.sy
 ![Launch Stack](../img/launch.png)
 
 ## Login in den Server
-*    Für den Login auf der eben erstellten Maschine  besorgen wir uns die IP-Adresse der virtuellen Maschine. Diese sehen wir unter *Compute* --> *Instances* im Feld "Floating IP" für die neu gebaute Maschine.  Mit folgendem Befehl können wir den Zugriff auf
-   unsere Maschine unter Mac und Linux in einem Terminal testen:
+*    Für den Login auf der eben erstellten Maschine besorgen wir uns die IP-Adresse der virtuellen Maschine. Diese sehen wir unter *Compute* --> *Instances* im Feld "Floating IP" für die neu gebaute Maschine. Mit folgendem Befehl können wir den Zugriff auf unsere Maschine unter Mac und Linux in einem Terminal testen:
 
 ```
 ssh syseleven@<meineIP-Adresse>
@@ -49,7 +48,7 @@ ssh syseleven@<meineIP-Adresse>
 
 ![ssh login](../img/loginterminal.png)
 
-*    Im Hintergrund wird nun der Webserver, der Datenbankserver, eine akutelle PHP-Version und eine Datenbank installiert bzw. angelegt.  
+*    Im Hintergrund wird nun der Webserver, der Datenbankserver, eine akutelle PHP-Version und eine Datenbank installiert bzw. angelegt.
    Dem Fortschritt können wir folgen mit folgendem Befehl:
 
 
