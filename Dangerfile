@@ -9,3 +9,7 @@ warn("PR is classed as Work in Progress") if github.pr_title.include? "[WIP]"
 warn("Big PR") if git.lines_of_code > 500
 
 prose.lint_files "*/**/*.md"
+
+# TODO: spell check for german
+prose.check_spelling "english/**/*.md"
+
