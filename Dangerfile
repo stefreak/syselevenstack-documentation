@@ -9,14 +9,17 @@ warn("PR is classed as Work in Progress") if github.pr_title.include? "[WIP]"
 warn("Big PR") if git.lines_of_code > 500
 
 prose.ignored_words = [
-"TOC]", # mkdocs placeholder for table of contents
+"[TOC]", # mkdocs placeholder for table of contents
 
 # brands
 "SysEleven",
 "OpenStack",
 "CoreOS",
 "S3",
-"M1", # e.g. instance size M1 Micro
+"M1 Micro",
+"M1 Small",
+"M1 Medium",
+"M1 Large",
 
 # network protocols
 "DHCP",
