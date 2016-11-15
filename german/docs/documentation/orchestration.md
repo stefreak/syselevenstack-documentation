@@ -9,7 +9,7 @@ Sie kann als Template-Spezifikation angesehen werden, welche mit Hilfe der Orche
 
 Sowohl via unserer öffentlichen OpenStack API, als auch durch das SysEleven Stack Dashboard können Stacks verwaltet werden.
 
-Die Kontrolle, die der SysElevenStack dem Nutzer bietet, geht weit über das
+Die Kontrolle, die der SysEleven Stack dem Nutzer bietet, geht weit über das
 Starten und Stoppen einer virtuellen Maschine hinaus. Der Nutzer des SysEleven
 Stacks kontrolliert das Netzwerk seiner Umgebung, die Bereitstellung von
 virtuellem Speicher, die Erstellung von Sicherheitsrichtlinien innerhalb eines

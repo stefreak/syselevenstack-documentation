@@ -17,8 +17,10 @@ prose.ignored_words = [
 "CoreOS",
 "S3",
 "NGINX",
+"Github",
 
 # flavors
+# TODO: Somehow these don't work ...
 "M1",
 "Micro",
 "Small",
@@ -38,7 +40,14 @@ prose.ignored_words = [
 # abbreviations
 "SDKs", # Software Development Kit
 "UID", # Unique Identifier
-"YAML" # YAML Ain't Markup Language
+"YAML", # YAML Ain't Markup Language
+"RC", # OpenStack RC file
+"v3", # OpenStack RC file v3
+
+# correct words not in dictionary
+"reusability",
+"setups",
+"setup"
 ]
 
 prose.lint_files "*/**/*.md"

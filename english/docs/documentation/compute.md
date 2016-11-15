@@ -6,19 +6,19 @@
 
 SysEleven Stacks Compute Service is built on the OpenStack Nova project.
 
-It manages the lifecycle of compute instances in your environment. Its responsibilities include spawning, scheduling and decommissioning of virtual machines on demand.
+It manages the life-cycle of compute instances in your environment. Its responsibilities include spawning, scheduling and decommissioning of virtual machines on demand.
 
 You can manage your compute instance both via our public OpenStack API endpoints, as well as using the [Dashboard](https://dashboard.cloud.syseleven.net).
 ## Instance types
 
-Currently, we provide you with 4 different instance types.
+Currently, we provide you with four different instance types.
 
-Name      | API Name  | Memory | VCPUs | Storage* | Network Performance
-----------|-----------|--------|-------|----------|--------------------
-M1 Micro  | m1.micro  | 2GB    | 1     | 50GB     | basic
-M1 Small  | m1.small  | 8GB    | 2     | 50GB     | basic
-M1 Medium | m1.medium | 16GB   | 4     | 50GB     | intermediate
-M1 Large  | m1.large  | 32GB   | 8     | 50GB     | high
+Name      | API Name    | Memory | VCPUs | Storage* | Network Performance
+----------|-------------|--------|-------|----------|--------------------
+M1 Micro  | `m1.micro`  | 2GB    | 1     | 50GB     | basic
+M1 Small  | `m1.small`  | 8GB    | 2     | 50GB     | basic
+M1 Medium | `m1.medium` | 16GB   | 4     | 50GB     | intermediate
+M1 Large  | `m1.large`  | 32GB   | 8     | 50GB     | high
 
 * You can extend storage using our our Block Storage Service.
 
@@ -38,7 +38,7 @@ If you need a fixed IP, you can assign a port from our networking service as a f
         - ip_address: 192.168.122.100
 ```
 
-### My compute instace was created, but is not accessible via SSH/HTTP etc.
+### My compute instance was created, but is not accessible via SSH/HTTP etc.
 
 By default all compute instances of are using the "default" security group. It's settings do not allow any other packets, except of ICMP in order to be able to ping your compute instance. Any other ports needed by a given instance need to be opened by adding a rule to the security group your instance uses (i.e., SSH or HTTPS).
 Here is an example that shows how you can use a heat template to allow incoming HTTP/HTTPS traffic via your security group:
