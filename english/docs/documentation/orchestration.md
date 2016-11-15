@@ -289,11 +289,11 @@ resources:
 
 ## Security Groups
 
-But even then, attempts to connect to the machine will fail both in the browser or via SSH. What is missing? You need to decide how your virtual machine should be used and allow network traffic to flow accordingly. The default security policy in the SysEleven Stack forbids all traffic coming from the Internet. This is a good practice to ensure stacks are secure by default and you do not expose internal systems, i.e. a database server, to the Internet accidentally.
+Attempts to connect to the machine will fail both in the browser or via SSH. What is missing? You need to decide how your virtual machine should be used and allow network traffic to flow accordingly. The default security policy in the SysEleven Stack forbids all traffic coming from the Internet. This is a good practice to ensure stacks are secure by default and you do not expose internal systems, i.e. a database server, to the Internet accidentally.
 
 You can change that policy easily by adding another object: A *Security Group*. Security groups are similar to simple firewalls: You need to define the protocol, maybe a port or port range, and the source and target IP addresses or address ranges, as well as the direction of traffic. Incoming traffic is called *ingress*, outgoing traffic *egress*. 
 
-If you now start your stack, all objects are successfully combined and your first virtual machine is live! Do not worry, future machines will be less complicated to bring up, since you will build a collection of templates that cover your use cases. Here is the full orchestration template that allows you to start the minimal example we built so far:
+If you now start your stack, all objects are successfully combined and your first virtual machine is live. Do not worry, future machines will be less complicated to bring up, since you will build a collection of templates that cover your use cases. Here is the full orchestration template that allows you to start the minimal example we built so far:
 
 ```
 heat_template_version: 2014-10-16
@@ -501,7 +501,7 @@ Since 15.04, Ubuntu uses an RFC conform implementation of DHCP. The software def
       - {start: 10.0.0.10, end: 10.0.0.250}
 ```
 
-### I cannot delete my stack anymore! What can I do now?
+### I cannot delete my stack anymore – What can I do now?
 
 A heat stack follows a chain of dependencies on creation, to bring a certain order into the creation of objects. It will also respect this order on removing the stack. By specifying specific dependencies you can work around the failure. If you forgot to specify dependencies, deletion often fails with an error message similar to this one:
 

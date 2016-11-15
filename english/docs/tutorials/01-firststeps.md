@@ -32,7 +32,7 @@ We have already created a template for our Orchestration Service for you. Feel f
 
 At Orchestration --> Stacks --> Launch Stack we can now use the template we were just looking at to start our server.
 
-If we set the "Template Source" to "URL", we can now fill in the URL of the the above template into "Template URL" and go to "Next". We will set a name for the Stack at "Stackname", like *lampserver* and "key_name" should be the name of the key pair we uploaded initially. "Password" can be set to any value you like.
+If we set the "Template Source" to "URL", we can now fill in the URL of the the above template and go to "Next". We will set a name for the Stack at "Stackname", like *lampserver* and "key_name" should be the name of the key pair we uploaded initially. "Password" can be set to any value you like.
   
 ![Launch Stack](../img/launch.png)
 
