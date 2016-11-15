@@ -3,6 +3,6 @@ language: ruby
 rvm:
   - 2.2
 env:
-  - DANGER_GITHUB_API_TOKEN=45df698ffa4d500ef35a3dcb726225f652151cee
+  - DANGER_GITHUB_API_TOKEN=8fb87ed836afe0316a4175a97a79b2249fcfb043
 install: bundle install
 script: bundle exec danger
