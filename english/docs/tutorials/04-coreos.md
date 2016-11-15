@@ -14,7 +14,7 @@
 
 ## 1. Clone example repository
 
-You will be working with our "[heattemplates-examples](https://github.com/syseleven/heattemplates-examples)" repository on github. Your first step is to clone it:
+You will be working with our "[heattemplates-examples](https://github.com/syseleven/heattemplates-examples)" repository on Github. Your first step is to clone it:
 
 ```
 $ git clone https://github.com/syseleven/heattemplates-examples
@@ -43,7 +43,7 @@ In this command, `key_name` references an SSH-Key that you created in the [First
 
 You have now started one or more CoreOS instances on the SysEleven Stack. You will be able to access each one using a public floating IP address.
 
-Every CoreOS instance runs a docker container launching an NGINX based webserver, listening on port 80. You can check that using the following command:
+Every CoreOS instance runs a docker container launching an NGINX based web server, listening on port 80. You can check that using the following command:
 
 `curl <ip-address>` 
 

@@ -17,7 +17,7 @@ You can manage your network both via our public OpenStack API endpoints, as well
 #### Prerequisites
 
 * Access to the [Dashboard](https://dashboard.cloud.syseleven.net)
-* at least 2 existing routers/networks
+* at least two existing routers/networks
 * different IP ranges in both networks
 
 #### Step One: Login
@@ -33,7 +33,7 @@ To create a new interface on our router:
 * Click on the left side bar, then "Network" --> "Router".
 * Click on the first router you want to establish a connection with.
 * In the new window, under "Interfaces", click on "Add Interfaces".
-* Click on the router we want to connect to and add an IP under "IP" out of the ip-range from target router.
+* Click on the router we want to connect to and add an IP under "IP" out of the IP range from target router.
 * Click "Submit".
 
 Repeat the process with the other router.
@@ -47,7 +47,7 @@ To add a static route:
 * Click on the left side bar, then "Network" --> "Router".
 * Click on the first router you want to establish a connection with.
 * Click on "Static Route"
-* Click "Add Static Route" and enter the ip-range from the target network and as "Nexthop" the same ip-adress as in Step Two
+* Click "Add Static Route" and enter the IP range from the target network and as "Next hop" the same IP address as in step two
 
 Repeat the process with the other router
 
@@ -61,7 +61,7 @@ To create the host route:
 * Click on the subnet you want to connect to
 * Click on "Edit Subnet" and go to "Subnet Details".
 * Under "Host Routes" we can now set the route.
-* Specify the ip range (e.g. 10.0.0.0/24) and the ip address of the specific router interface.
+* Specify the IP range (e.g. `10.0.0.0/24`) and the IP address of the specific router interface.
 * Click "Submit" to save the host route
 
 Repeat the process with the other subnet.

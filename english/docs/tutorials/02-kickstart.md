@@ -45,11 +45,11 @@ jpeschke:~ jpeschke$ openstack network list
 ```
 
 In this example you see a network pool which provides us with Floating IP addresses. This shows that you successfully
-used the SysElevenStack API.
+used the SysEleven Stack API.
 
 ## Using infrastructure templates
 
-Now you can use the OpenStack command line tools to control all the infrastructure components of the SysEleven Stacks (i.e., networks, security groups, virtual machines). To automate this, you can use Heat templates which are a structured representation of your setups. SysEleven provides examples that work with the SysEleven Stack on github. Feel free to check them out!
+Now you can use the OpenStack command line tools to control all the infrastructure components of the SysEleven Stacks (i.e., networks, security groups, virtual machines). To automate this, you can use Heat templates which are a structured representation of your setups. SysEleven provides examples that work with the SysEleven Stack on Github. Feel free to check them out!
 
 ```
 git clone https://github.com/syseleven/heattemplates-examples.git
