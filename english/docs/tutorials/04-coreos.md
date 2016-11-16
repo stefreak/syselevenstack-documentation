@@ -10,11 +10,11 @@
 ## Prerequisites
 
 * You should be able to use simple heat templates, like shown in the [first steps tutorial](01-firststeps/).
-* You know the basics of using the OpenStack CLI (Environment variables are set, like shown in the [kickstart tutorial](02-kickstart/).
+* You know the basics of using the OpenStack CLI (Environment variables are set, like shown in the [kick-start tutorial](02-kickstart/).
 
 ## Clone the example repository
 
-You will be working with our "[heattemplates examples repository](https://github.com/syseleven/heattemplates-examples)" on Github. Your first step is to clone it:
+You will be working with our "[heat examples repository](https://github.com/syseleven/heattemplates-examples)" on Github. Your first step is to clone it:
 
 ```
 $ git clone https://github.com/syseleven/heattemplates-examples
