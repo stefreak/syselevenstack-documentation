@@ -47,7 +47,9 @@ prose.ignored_words = [
 # correct words not in dictionary
 "reusability",
 "setups",
-"setup"
+"setup",
+"anymore",
+"oftentimes"
 ]
 
 prose.lint_files "*/**/*.md"

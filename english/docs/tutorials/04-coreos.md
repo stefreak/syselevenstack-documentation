@@ -10,18 +10,18 @@
 ## Prerequisites
 
 * You should be able to use simple heat templates, like shown in the [first steps tutorial](01-firststeps/).
-* You know the basics of using the OpenStack CLI (Environment variables are set, like shown in the [Kickstart-Tutorial](02-kickstart/).
+* You know the basics of using the OpenStack CLI (Environment variables are set, like shown in the [kickstart tutorial](02-kickstart/).
 
-## 1. Clone example repository
+## Clone the example repository
 
-You will be working with our "[heattemplates-examples](https://github.com/syseleven/heattemplates-examples)" repository on Github. Your first step is to clone it:
+You will be working with our "[heattemplates examples repository](https://github.com/syseleven/heattemplates-examples)" on Github. Your first step is to clone it:
 
 ```
 $ git clone https://github.com/syseleven/heattemplates-examples
 $ cd heattemplates-examples/coreOS
 ```
 
-## 2. Upload CoreOS image
+## Upload the CoreOS image
 
 We created a little helper script for this example to upload the [official stable CoreOS image](https://coreos.com/os/docs/latest/booting-on-openstack.html) to the SysEleven Stack.
 
@@ -33,7 +33,7 @@ $ ./upload_replacing_coreos_image.sh
 
 This helper script first downloads the image, deletes existing images on your SysEleven Stack named `private_coreos` and finally uploads the new image.
 
-## 3. Start CoreOS instances
+## Start the CoreOS instances
 
 After uploading the CoreOS image, you can create the stack.
 
