@@ -4,7 +4,7 @@
 
 ## Ziel
 
-* Wir werden eine minimale CoreOS Instanz im SysEleven Stack starten. Auf der Instanz wird ein einfacher Docker container (nginx) laufen.
+* Wir werden eine minimale CoreOS Instanz im SysEleven Stack starten. Auf der Instanz wird ein einfacher Docker Container (nginx) laufen.
 * Außerdem laden wir das aktuellste CoreOS image hoch
 
 ## Vorraussetzungen 
