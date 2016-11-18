@@ -4,6 +4,9 @@
 
 Der SysEleven Stack Orchestration Service basiert auf dem OpenStack Heat Projekt.
 
+Mit ihm können zusammengesetzte Cloud Applikation in der OpenStack nativen HOT Template-Sprache orchestriert werden.
+Sie kann als Template-Spezifikation angesehen werden, welche mit Hilfe der Orchestration Service API die weiteren SysEleven Stack Services konfigurieren kann.
+
 Sowohl via unserer öffentlichen OpenStack API, als auch durch das SysEleven Stack Dashboard können Stacks verwaltet werden.
 
 Die Kontrolle, die der SysElevenStack dem Nutzer bietet, geht weit über das
