@@ -6,6 +6,12 @@
 
 SysEleven Stacks Object Storage Service stellt einen S3 kompatiblen Object Storage dar.
 
+Der Object Storage Service speichert und liest arbiträre unstrukturierte Datenobjekte via einer RESTful API. Er ist fehlertolerant, durch Datenreplikationen und eine skalierende Architektur. Durch seine Implementation als "eventually consistent storage" ist es nicht wie z.B. ein Fileserver einhängbar als Mountpoint.
+
+It stores and retrieves arbitrary unstructured data objects via a RESTful, HTTP based API. It is highly fault tolerant with its data replication and scale-out architecture. In its implementation as a distributed eventually consistent object storage, it is not mountable like a file server
+
+
+
 Die OpenStack API kann genutzt werden um Credentials für unseren Object Storage zu erstellen. Die S3 API kann mit diversen S3 Clients und SDKs angesprochen werden.
 
 ### Buckets
