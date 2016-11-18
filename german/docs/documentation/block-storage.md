@@ -6,7 +6,10 @@
 
 SysEleven Stacks Block Storage Service basiert auf dem OpenStack Cinder Projekt.
 
+Der Block Storage Service fügt persistenten, langlebigen Block Storage zu deinen Compute Instanzen hinzu.
+
 Sowohl via unserer öffentlichen OpenStack API, als auch durch das SysEleven Stack Dashboard können Block Storage Volumes verwaltet und in Compute Instanzen verfügbar gemacht werden.
+
 Es können Snapshots von Block Storage Volumes erstellt werden, welche als Grundlage zur Erstellung neuer Volumes oder Images genutzt werden können.
 
 ## FAQ
