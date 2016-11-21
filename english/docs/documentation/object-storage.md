@@ -27,7 +27,7 @@ Yes. You need to meet the following prerequisites need:
 
 
 * You need to request additional rights for your user account. To do that, please send an email to our [Cloud Support](mailto:cloudsuppor@syseleven.de).
-* You need the OpenStack command line tools in a current version (`2.0 or newer).
+* You need the OpenStack command line tools in a current version (`2.0` or newer).
 * An S3 client, i.e., `s3cmd`d
 * A change to your shell environment (you can add this to your `openrc` file):
 
