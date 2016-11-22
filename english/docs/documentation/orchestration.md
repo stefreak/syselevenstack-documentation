@@ -2,13 +2,13 @@
 
 [TOC]
 
-The SysElevenStack orchestration service is built on the OpenStack Heat project.
+The SysEleven Stack orchestration service is built on the OpenStack Heat project.
 
 It orchestrates multiple composite cloud applications by using the OpenStack native HOT template format. It can be seen as an overlay template specification, which through a native REST API can configure the underlying SysEleven Stack services.
 
 You can use the orchestration service both via our public OpenStack API endpoints, as well as using the [Dashboard](https://dashboard.cloud.syseleven.net)
 
-With the orchestration service you can do more than just start and stop virtual machines: You have control over your stack's network, storage, security groups, as well as your virtual machines. To run web services successcully on the SysEleven Stack, these components need to be known and orchestrated.
+With the orchestration service you can do more than just start and stop virtual machines: You have control over your stack's network, storage, security groups, as well as your virtual machines. To run web services successfully on the SysEleven Stack, these components need to be known and orchestrated.
 
 ## Network
 
@@ -97,7 +97,7 @@ syselevenstack@kickstart:~$ neutron net-list
 +--------------------------------------+---------------+---------------------------------------------------+
 ```
 
-Choose one of the public networks, for this example **float1** with the ID `80ca1837-a461-4621-b58d-79507aa8b044`. Again, create the network, just with a parameter:
+Choose one of the public networks, for this example `float1` with the ID `80ca1837-a461-4621-b58d-79507aa8b044`. Again, create the network, just with a parameter:
 ```
 heat stack-create -f net2.yaml \
                   -P public_network_id=80ca1837-a461-4621-b58d-79507aa8b044 \
@@ -221,7 +221,7 @@ resources:
 
 You can use this template as usual, only that you reference the public SSH Key you stored in the Dashboard using the command line switch `-Pkey_name=<PubKeyName>` This ensures that you can log in to the default account on your virtual machine using SSH.
 
-In the [Dashboard](https://dashboard.cloud.syseleven.net) you can see the network being built. You also see the subnet and router are created and all objects will be connected. We cannot connect to our virtual machine though: The setup is missing a publically accessible IP address. The missing object is a *Floating IP*, another object we need to connect with our *Port*. When that's done, we have a virtual machine that is reachable from the Internet. Here is the necessary orchestration code:
+In the [Dashboard](https://dashboard.cloud.syseleven.net) you can see the network being built. You also see the subnet and router are created and all objects will be connected. We cannot connect to our virtual machine though: The setup is missing a publicly accessible IP address. The missing object is a *Floating IP*, another object we need to connect with our *Port*. When that's done, we have a virtual machine that is reachable from the Internet. Here is the necessary orchestration code:
 
 ```
 heat_template_version: 2014-10-16
@@ -289,11 +289,11 @@ resources:
 
 ## Security Groups
 
-But even then, attempts to connect to the machine will fail both in the browser or via SSH. What is missing? You need to decide how your virtual machine should be used and allow network traffic to flow accordingly. The default security policy in the SysEleven Stack forbids all traffic coming from the Internet. This is a good practice to ensure stacks are secure by default and you do not expose internal systems, i.e. a database server, to the Internet accidentally.
+Attempts to connect to the machine will fail both in the browser or via SSH. What is missing? You need to decide how your virtual machine should be used and allow network traffic to flow accordingly. The default security policy in the SysEleven Stack forbids all traffic coming from the Internet. This is a good practice to ensure stacks are secure by default and you do not expose internal systems, i.e. a database server, to the Internet accidentally.
 
 You can change that policy easily by adding another object: A *Security Group*. Security groups are similar to simple firewalls: You need to define the protocol, maybe a port or port range, and the source and target IP addresses or address ranges, as well as the direction of traffic. Incoming traffic is called *ingress*, outgoing traffic *egress*. 
 
-If you now start your stack, all objects are successfully combined and your first virtual machine is live! Do not worry, future machines will be less complicated to bring up, since you will build a collection of templates that cover your use cases. Here is the full orchestration template that allows you to start the minimal example we built so far:
+If you now start your stack, all objects are successfully combined and your first virtual machine is live. Do not worry, future machines will be less complicated to bring up, since you will build a collection of templates that cover your use cases. Here is the full orchestration template that allows you to start the minimal example we built so far:
 
 ```
 heat_template_version: 2014-10-16
@@ -381,7 +381,7 @@ ssh ec2-user@<IP-Adresse>
 
 In Ubuntu cloud images, `ec2-user` is the default name of the default user account.
 
-You got to know the network and virtual machine parts of orchestration. You do not need anything else to run a simple stack. But many web applications have operational constraints we did not cover yet: What happens if you need to change the size or number of our virtual machines? How do you preserve and find my data if I delete my stack as shown above? You can find answers to these questions in the [Block Storage documentation](../block-storage). Every virtual machine currently comes with 50 Gigabytes of storage. If you need additional storage, you need to create and use volumes. Volumes are also interesting from another point of view: If you want to preserve data beyond the life time of a virtual machine (for example a database for a web application), you need to use volumes. The storage that comes with a virtual machine is *ephemeral*: it is lost when the virtual machine is deleted. To provide long lasting storage, create a stack to create and provide a volume of the required storage size.
+You got to know the network and virtual machine parts of orchestration. You do not need anything else to run a simple stack. But many web applications have operational constraints we did not cover yet: What happens if you need to change the size or number of our virtual machines? How do you preserve and find my data if I delete my stack as shown above? You can find answers to these questions in the [Block Storage documentation](../block-storage). Every virtual machine currently comes with 50 GB of storage. If you need additional storage, you need to create and use volumes. Volumes are also interesting from another point of view: If you want to preserve data beyond the life time of a virtual machine (for example a database for a web application), you need to use volumes. The storage that comes with a virtual machine is *ephemeral*: it is lost when the virtual machine is deleted. To provide long lasting storage, create a stack to create and provide a volume of the required storage size.
 
 <!--- TODO: Code fehlt. -->
 ```
@@ -389,7 +389,7 @@ You got to know the network and virtual machine parts of orchestration. You do n
 
 Using a storage template, you get a volume with a UID. You can pass this UID to a virtual machine using a parameter, where the volume will show up as an additional block device, just like an additional hard disk. Using that block device, data can be stored persistently.
 
-You can also build a setup where a virtual machine has more than 50Gigabytes of storage. In that case you do not need to create the volume in a separate stack, you can just expand the orchestration template for your virtual machine. A complete setup would look like this:
+You can also build a setup where a virtual machine has more than 50 GB of storage. In that case you do not need to create the volume in a separate stack, you can just expand the orchestration template for your virtual machine. A complete setup would look like this:
 
 <!--- TODO: Code fehlt. -->
 ```
@@ -441,11 +441,11 @@ parameters:
 
 As you can see it is also possible to define a default value. If it is set, a parameter becomes optional and the default value will be used if it was not set from the outside.
 
-If a parameter has no default, you are forced to provide the parameter when starting the heatstack. This can be useful for example if you need to mount a shared storage volume because the UUID of the volume is not known in advance.
+If a parameter has no default, you are forced to provide the parameter when starting the heat stack. This can be useful for example if you need to mount a shared storage volume because the UUID of the volume is not known in advance.
 
 ### Resources
 
-The resource section is the most importnat one of a template. It defines, what exactly should be built. A resource can be any object in OpenStack. Most of the time the resource section is not only about creating resources, but also about connecting them in a way that makes sense.
+The resource section is the most important one. It defines what exactly should be built. A resource can be any object in OpenStack. Most of the time the resource section is not only about creating resources, but also about connecting them in a way that makes sense.
 
 As an example: for a virtual machine to get network access, it must be attached to a port (the virtual counterpart to a network interface card). You can do that by referencing the port resource using `get_resource` from the virtual machine:
 
@@ -479,9 +479,9 @@ outputs:
 
 ## FAQ
 
-### I am using Ubuntu from 15.xx and the default route is missing
+### I am using Ubuntu from `15.xx` and the default route is missing
 
-Since 15.04, Ubuntu uses an RFC conform implementation of DHCP. The software defined network does not send a default route by default, therefore it must be explicitly set using `host_routes`. We are currently working with the manufacturer on a solution. Using the following configuration you can work around this problem. Following is an example for the subnet 10.0.0.0/24 with 10.0.0.1 as the default gateway.
+Since `15.04`, Ubuntu uses an RFC conform implementation of DHCP. The software defined network does not send a default route by default, therefore it must be explicitly set using `host_routes`. We are currently working with the manufacturer on a solution. Using the following configuration you can work around this problem. Following is an example for the subnet `10.0.0.0/24` with `10.0.0.1` as the default gateway.
 
 ```
   subnet:
@@ -501,7 +501,7 @@ Since 15.04, Ubuntu uses an RFC conform implementation of DHCP. The software def
       - {start: 10.0.0.10, end: 10.0.0.250}
 ```
 
-### I cannot delete my stack anymore! What can I do now?
+### I cannot delete my stack anymore – What can I do now?
 
 A heat stack follows a chain of dependencies on creation, to bring a certain order into the creation of objects. It will also respect this order on removing the stack. By specifying specific dependencies you can work around the failure. If you forgot to specify dependencies, deletion often fails with an error message similar to this one:
 

@@ -27,7 +27,7 @@ Yes. You need to meet the following prerequisites need:
 
 
 * You need to request additional rights for your user account. To do that, please send an email to our [Cloud Support](mailto:cloudsuppor@syseleven.de).
-* You need the OpenStack command line tools in a current version (2.0 or newer).
+* You need the OpenStack command line tools in a current version (`2.0` or newer).
 * An S3 client, i.e., `s3cmd`d
 * A change to your shell environment (you can add this to your `openrc` file):
 
@@ -68,7 +68,7 @@ Then, use it to add some file(s):
 s3cmd put test.jpg s3://BUCKET_NAME -P
 ```
 
-The commandline option `-P` means the file(s) uploaded is publically available. Please note that s3cmd returns incorrect URLs, i.e.:
+The command-line option `-P` means the file(s) uploaded is publicly available. Please note that `s3cmd` returns incorrect URLs, i.e.:
 
 ```
 Public URL of the object is: http://BUCKET_NAME.s3.amazonaws.com/test.jpg

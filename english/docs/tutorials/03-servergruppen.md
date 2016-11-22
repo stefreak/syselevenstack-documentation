@@ -1,7 +1,7 @@
 # Resource Groups: From Single Server to Distributed Setup
 [TOC]
 
-## Simplifyling Infrastructure Templates with ResourceGroups
+## Simplifying Infrastructure Templates with Resource Groups
 
 * This tutorial shows how you can group servers. That way you can control the
 * amount of identical servers via parameters.
@@ -56,14 +56,14 @@ As you can see, servers and ports are defined twice. That will turn cumbersome w
 
 ## The Elegant Way: Grouping Servers
 
-A simple servers with several identical servers is split between two files: A *setup.yaml* that describes everything except the servers:
+A simple servers with several identical servers is split between two files: A `setup.yaml that describes everything except the servers:
 
 ```
 heat_template_version: 2014-10-16 
 
 #
 # you can start this stack using the following command:
-# 'openstack stack create -t setup.yaml <stackName>'
+# `openstack stack create -t setup.yaml <stackName>
 #
 
 description: deploys a group of servers
@@ -104,7 +104,7 @@ resources:
       - {start: 10.0.0.10, end: 10.0.0.250}
 ```
 
-This is accompanied by *server.yaml*, where the actual virtual machine definition is kept:
+This is accompanied by `server.yaml`, where the actual virtual machine definition is kept:
 
 ```
 heat_template_version: 2014-10-16
@@ -145,7 +145,7 @@ This method has several advantages:
  
 ## An Example
 
-We published an [example setup](https://github.com/syseleven/heattemplates-examples/tree/master/example-setup) using ResourceGroups for modularization and simplification.
+We published an [example setup](https://github.com/syseleven/heattemplates-examples/tree/master/example-setup) using Resource Groups for modularization and simplification.
 
 
 

@@ -9,11 +9,11 @@ Sie kann als Template-Spezifikation angesehen werden, welche mit Hilfe der Orche
 
 Sowohl via unserer öffentlichen OpenStack API, als auch durch das SysEleven Stack Dashboard können Stacks verwaltet werden.
 
-Die Kontrolle, die der SysElevenStack dem Nutzer bietet, geht weit über das
+Die Kontrolle, die der SysEleven Stack dem Nutzer bietet, geht weit über das
 Starten und Stoppen einer virtuellen Maschine hinaus. Der Nutzer des SysEleven
 Stacks kontrolliert das Netzwerk seiner Umgebung, die Bereitstellung von
 virtuellem Speicher, die Erstellung von Sicherheitsrichtlinien innerhalb eines
-Projektes und eben auch die virtuellen Maschinen selbst.  Damit erfolgreich
+Projektes und eben auch die virtuellen Maschinen selbst. Damit erfolgreich
 Webservices im SysEleven Stack betrieben werden können, müssen diese einzelnen
 Bestandteile bekannt sein.  
 
@@ -363,7 +363,7 @@ der Port-Range und Quell- und Zieladressräume definiert werden. Ebenfalls muss
 die Fließrichtung des Netzwerkverkehrs angegeben werden, für den diese Regel
 gilt: Eingehender Verkehr wird mit *Ingress* bezeichnet, ausgehender Verkehr
 mit *Egress*. Starten wir nun unseren Stack, haben wir alle Bausteine
-erfolgreich verknüpft und haben unsere erste Maschine live! Keine Angst, der
+erfolgreich verknüpft und haben unsere erste Maschine live. Keine Angst, der
 hier betriebene Aufwand wiederholt sich nicht mit jeder Installation einer
 Maschine. Alles, was wir brauchen, ist eine Bibliothek mit Templates, die
 unsere Anwendungsfälle abdeckt. Hier der Code, der unsere minimale sinnvolle
@@ -531,7 +531,7 @@ Hierzu dienen Parameter. Parameter werden in dieser Sektion deklariert.
 Definiert werden sie entweder als Übergebene Argumente auf der Kommandozeile
 (mit dem Schalter `-P <Parameter>=<Wert>`, in einem sogenannten
 Environment-File, oder im Fall modular aufgebauter Heat-Stacks in dem
-Eltern-Modul für das Kind-Modul als Übergabewert.  Die Deklaration sieht so
+Eltern-Modul für das Kind-Modul als Übergabewert. Die Deklaration sieht so
 aus:
 
 ``` 
@@ -550,7 +550,7 @@ Vorhinein bekannt ist.
 
 ### Resources
 
-Die Resources-Sektion ist die wichtigste in einem Template: An dieser Stelle wird festgelegt, was überhaupt gebaut werden soll. Eine Resource kann ein beliebiges Objekt in OpenStack sein.  Sehr oft geht es darum, verschiedene Resourcen nicht nur anzulegen, sondern miteinandander sinnvol zu verknüpfen. Ein Beispiel: Damit eine virtuelle Maschine Netzwerk bekommt, muss sie mit einem Port (das virtuelle Äquivalent zu einer Netzwerkkarte) verknüpft werden. Diese Verknüpfung geschieht, indem innerhalb der Maschinendefinition mittels “get_resource” auf die Port-Ressource verwiesen wird:
+Die Resources-Sektion ist die wichtigste in einem Template: An dieser Stelle wird festgelegt, was überhaupt gebaut werden soll. Eine Resource kann ein beliebiges Objekt in OpenStack sein. Sehr oft geht es darum, verschiedene Resourcen nicht nur anzulegen, sondern miteinandander sinnvol zu verknüpfen. Ein Beispiel: Damit eine virtuelle Maschine Netzwerk bekommt, muss sie mit einem Port (das virtuelle Äquivalent zu einer Netzwerkkarte) verknüpft werden. Diese Verknüpfung geschieht, indem innerhalb der Maschinendefinition mittels “get_resource” auf die Port-Ressource verwiesen wird:
 
 ```
 resources:
