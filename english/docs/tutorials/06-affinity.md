@@ -5,25 +5,24 @@
 ## Goal
 
 * This tutorial shows howto distribute instances to different hosts using servergroups
-* It is also shown to force instances on the same host
+* It is also shown how to force instances on the same host
 
 ## Prerequisites
 
 * You know the basics of using the OpenStack CLI (Environment variables are set, like shown in the [kick-start tutorial](02-kickstart/).
 
 ## Problem
-By default the compute scheduler (by nova) decides using status of hosts, as well as requested properties such as number of VCPUs, ram, or disksize on which host the instance is created.
+By default, there is no guarantees wether servers will be distributed across different hypervisors. The Nova compute scheduler makes that decision based on available resources.
 
-In rare cases this will lead to redundamt service like app servers to be created on the same host and therefore lead to downtimes of these services if this host is down.
+This can lead to services that are meant to be highly available to share a common host and therefore share a single point of failure.
 
 Inversely it might be desired to have two services to be located as close as possible, because they will need high bandwidth between each other.
 
-Both cases are solvable using ServerGroups. Which know so called policies, which the compute scheduler will consider too. That way you can influence the distribution of instances.
-Complex solutions like nested ServerGroups, by assigning multiple groups to one instance are not possible.
+Both cases are solvable using ServerGroups. That way you can influence the distribution of instances.
 
 ## Principle
 
-Create a OS::Nova::ServerGroup ressource and provide the uuid as scheduler hint in the server definition.
+Create a OS::Nova::ServerGroup resource and reference it as scheduler hint in the server definition.
 ```
 resources:
 
@@ -47,7 +46,7 @@ resources:
 
 ## Example
 
-Here the [ResourceGroups-Example](03-resourcegroups/) is extended using ServerGroups for affinity and anti-affinity *group.yaml*:
+Here the [ResourceGroups example](03-resourcegroups/) is extended using ServerGroups for affinity and anti-affinity *group.yaml*:
 ```
 heat_template_version: 2014-10-16
 
@@ -201,4 +200,4 @@ openstack server show server_1 -c name -c hostId
 
 ## Links/Examples
 
-The templates published on github [ServerGroups](https://github.com/syseleven/heattemplates-examples/tree/master/serverGroups) contains examples for affinity und anti-affinity.
+The templates published on github [affinity](https://github.com/syseleven/heattemplates-examples/tree/master/affinity) contain examples for affinity und anti-affinity.

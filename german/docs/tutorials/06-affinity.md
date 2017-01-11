@@ -12,18 +12,17 @@
 * Grundlagen zur Bedienung des OpenStack CLI (Umgebungsvariablen gesetzt, wie im [Kickstart-Tutorial](02-kickstart/) beschrieben.
 
 ## Problemstellung
-Standardmäßig entscheidet der Compute-Scheduler (von Nova) anhand der Verfügbarkeit von Hosts, als auch den geforderten Merkmalen wie z.B. Anzahl der VCPUs, Ram oder Diskgröße auf welchem Host die Instanz erzeugt wird.
+Standardmäßig gibt es keine Garantie, dass Instanzen auf unterschiedliche Hypervisor (Host) verteilt werden. Der Nova Compute-Scheduler entscheidet dies anhand der zur Verfügung stehenden Ressourcen.
 
-Dies kann in seltenen Fällen dazu führen, dass redundant ausgelegte Services wie App-Server auf dem gleichen Host landen und damit bei einem Ausfall des Hosts nicht mehr erreichbar sind.
+Dies kann dazu führen, dass redundant ausgelegte Services wie App-Server auf dem gleichen Host landen und damit bei einem Ausfall des Hosts nicht mehr erreichbar sind.
 
 Im umgekehrten Fall möchte man vielleicht zwei Services so nah wie möglich bei einander haben, da zwischen diesen viel Bandbreite gebraucht wird.
 
-Beides ist mit ServerGroups lösbar. Diese kennen so genannte Policies, welche vom Compute-Scheduler ebenfalls berücksichtigt werden. Auf diese Weise kann man Einfluss auf die Verteilung der Instanzen nehmen.
-Komplexe Lösungen wie die Schachtelung von ServerGroups durch Zuweisung mehrerer ServerGroups zu einer Instanz sind leider nicht möglich.
+Beides ist mit ServerGroups lösbar. Auf diese Weise kann man Einfluss auf die Verteilung der Instanzen nehmen.
 
 ## Prinzip
 
-Man erstellt eine OS::Nova::ServerGroup-Ressource und übergibt die Uuid dann als Scheduler-Hint an die Server-Definition.
+Man erstellt eine OS::Nova::ServerGroup-Ressource und referenziert diese als Scheduler-Hint in der Server-Definition.
 ```
 resources:
 
@@ -201,4 +200,4 @@ openstack server show server_1 -c name -c hostId
 
 ## Weiterführende Links/Beispiele
 
-Das auf Github veröffentlichte Beispiel [ServerGroups](https://github.com/syseleven/heattemplates-examples/tree/master/serverGroups) enthält ein Beispiel für affinity und anti-affinity.
+Das auf Github veröffentlichte Beispiel [affinity](https://github.com/syseleven/heattemplates-examples/tree/master/affinity) enthält ein Beispiel für affinity und anti-affinity.

@@ -12,7 +12,7 @@ pages:
     - 'Organising instances in groups': 'tutorials/03-resourcegroups.md'
     - 'Minimal CoreOS setup': 'tutorials/04-coreos.md'
     - 'Built stack-ressources logically upon another': 'tutorials/05-dependencies.md'
-    - 'Increasing availability of redundant instances': 'tutorials/06-affinity.md'
+    - 'Controlling availability of redundant instances': 'tutorials/06-affinity.md'
   - 'Documentation':
     - 'Compute': 'documentation/compute.md'
     - 'Networking': 'documentation/networking.md'
