@@ -1,4 +1,4 @@
-# Better distributing redunant services for higher availability
+# Better distributing redundant services for higher availability
 
 [TOC]
 
@@ -9,7 +9,7 @@
 
 ## Prerequisites
 
-* You know the basics of using the OpenStack CLI (Environment variables are set, like shown in the [kick-start tutorial](02-kickstart/).
+* You know the basics of using the OpenStack CLI (Environment variables are set, like shown in the [kick-start tutorial](02-kickstart/).)
 
 ## Problem
 By default, there is no guarantees wether servers will be distributed across different hypervisors. The Nova compute scheduler makes that decision based on available resources.
