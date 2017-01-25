@@ -1,4 +1,4 @@
-# Reduntante Services für eine höhere Verfügbarkeit besser verteilen
+# Redundante Services für eine höhere Verfügbarkeit besser verteilen
 
 [TOC]
 
@@ -9,7 +9,7 @@
 
 ## Vorraussetzungen
 
-* Grundlagen zur Bedienung des OpenStack CLI (Umgebungsvariablen gesetzt, wie im [Kickstart-Tutorial](02-kickstart/) beschrieben.
+* Grundlagen zur Bedienung des OpenStack CLI (Umgebungsvariablen gesetzt, wie im [Kickstart-Tutorial](02-kickstart/) beschrieben.)
 
 ## Problemstellung
 Standardmäßig gibt es keine Garantie, dass Instanzen auf unterschiedliche Hypervisor (Host) verteilt werden. Der Nova Compute-Scheduler entscheidet dies anhand der zur Verfügung stehenden Ressourcen.
