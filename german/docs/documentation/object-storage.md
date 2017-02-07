@@ -26,8 +26,6 @@ Eine Datei oder Datenobject können einem Key wie einem Dateinamen zugewiesen we
 
 Ja. Folgende Voraussetzungen müssen dafür erfüllt sein:
 
-* Um S3 im SysEleven Stack nutzen zu können müssen dem OpenStack Useraccount erweiterte Rechte zugewiesen werden. Dafür reicht eine E-Mail an cloudsupport@syeleven.de.
-
 * Ein OpenStack Command Line Client in der Version >= 2.0.
 
 * Ein S3 Client wie z.B. s3cmd
