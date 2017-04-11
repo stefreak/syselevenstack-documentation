@@ -14,7 +14,7 @@
 
 ## Optional: temporary work environment
 
-For this tutorial, we need a Linux environment and the OpenStack client.
+For this tutorial, we need a *Linux* environment and the OpenStack client.
 
 If you do not have that yet, you can create it with the following commands:
 
@@ -23,10 +23,21 @@ wget https://raw.githubusercontent.com/syseleven/heattemplates-examples/master/g
 ...
 $ openstack stack create -t sysElevenStackKickstart.yaml --parameter key_name=<ssh key name> <stack name> --wait
 ...
-$ ssh syseleven@<server-ip>
+```
 
-# enter your credentials
-$ vi openrc
+Now we need to connect to the created instance.
+
+```
+$ ssh syseleven@<server-ip>
+```
+
+The following commands need to be executed in the ssh session.
+
+We also need the OpenStack credentials (openrc-file).
+You can download the file here: https://dashboard.cloud.syseleven.net/horizon/project/access_and_security/api_access/openrc/
+
+```
+$ source openrc
 ```
 
 ## Create a snapshot

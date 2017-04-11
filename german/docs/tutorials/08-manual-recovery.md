@@ -14,17 +14,28 @@
 
 ## Optional: Temporäre Arbeitsumgebung
 
-Für dieses Tutorial benötigen wir eine Linux-Umgebung mit OpenStack Client. Sollte diese noch nicht vorhanden sein, kann sie mit folgenden Kommandos erstellt werden:
+Für dieses Tutorial benötigen wir eine *Linux-Umgebung* mit OpenStack Client. Sollte diese noch nicht vorhanden sein, kann sie mit folgenden Kommandos erstellt werden:
 
 ```
 wget https://raw.githubusercontent.com/syseleven/heattemplates-examples/master/gettingStarted/sysElevenStackKickstart.yaml
 ...
 $ openstack stack create -t sysElevenStackKickstart.yaml --parameter key_name=<ssh key name> <stack name> --wait
 ...
-$ ssh syseleven@<server-ip>
+```
 
-# Zugangsdaten eintragen
-$ vi openrc
+Nun müssen wir uns zur erstellten Instanz verbinden.
+
+```
+$ ssh syseleven@<server-ip>
+```
+
+Alle folgenden Kommandos werden hier ausgeführt.
+
+Wir benötigen auch die OpenStack Zugangsdaten (openrc-Datei).
+Diese kann hier heruntergeladen werden: https://dashboard.cloud.syseleven.net/horizon/project/access_and_security/api_access/openrc/
+
+```
+$ source openrc
 ```
 
 ## Erstellen eines Snapshots der defekten Instanz
