@@ -80,4 +80,6 @@ Jetzt kann das Dateisystem eingehängt werden.
 $ sudo mount /dev/nbd0p1 /mnt/
 ```
 
+# Zusammenfassung
+
 Die Daten sind nun zugreifbar unter `/mnt/`. Bei ext-Dateisystemen sollte ein Blick in `/mnt/lost+found` geworfen werden.

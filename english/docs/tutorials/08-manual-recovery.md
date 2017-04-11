@@ -82,4 +82,6 @@ Now we can mount the filesystem.
 $ sudo mount /dev/nbd0p1 /mnt/
 ```
 
+# Conclusion
+
 Now the data is accessible on `/mnt/`. If it's an ext filesystem you should have a look in `/mnt/lost+found`.
