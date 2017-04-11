@@ -14,6 +14,7 @@ pages:
     - 'Stack-Ressourcen logisch aufeinander aufbauen': 'tutorials/05-dependencies.md'
     - 'Verfügbarkeit von redundanten Services erhöhen': 'tutorials/06-affinity.md'
     - 'OpenStack CLI einrichten': 'tutorials/07-openstack-cli.md'
+    - 'Manuelle Datenwiederherstellung': 'tutorials/08-manual-recovery.md'
   - 'Dokumentation':
     - 'Compute': 'documentation/compute.md'
     - 'Networking': 'documentation/networking.md'

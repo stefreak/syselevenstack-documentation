@@ -13,7 +13,8 @@ pages:
     - 'Minimal CoreOS setup': 'tutorials/04-coreos.md'
     - 'Built stack-ressources logically upon another': 'tutorials/05-dependencies.md'
     - 'Controlling availability of redundant instances': 'tutorials/06-affinity.md'
-    - 'Install OpenStack CLI tools ': 'tutorials/07-openstack-cli.md'
+    - 'Install OpenStack CLI tools': 'tutorials/07-openstack-cli.md'
+    - 'Manual data recovery': 'tutorials/08-manual-recovery.md'
   - 'Documentation':
     - 'Compute': 'documentation/compute.md'
     - 'Networking': 'documentation/networking.md'
