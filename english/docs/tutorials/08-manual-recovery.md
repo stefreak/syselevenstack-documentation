@@ -1,21 +1,22 @@
-# Manuelle Datenwiederherstellung
+# Manual data recovery
 
 [TOC]
 
-## Ziel
+## Goal
 
-* Herunterladen eines Instanz-Snapshots
-* Dateisystem im Snapshot reparieren und mounten
+* Downloading a snapshot of an instance
+* Repairing the filesystem and mount it to extract data
 
-## Vorraussetzungen 
+## Prerequisites
 
-* Der Umgang mit einfachen Heat-Templates, wie [in den ersten Schritten](01-firststeps/) gezeigt, wird vorausgesetzt.
-* Grundlagen zur Bedienung des OpenStack CLI (Umgebungsvariablen gesetzt, wie im [Kickstart-Tutorial](02-kickstart/) beschrieben.
+* You should be able to use simple heat templates, like shown in the [first steps tutorial](01-firststeps/).
+* You know the basics of using the OpenStack CLI (Environment variables are set, like shown in the [kick-start tutorial](02-kickstart/).
 
+## Optional: temporary work environment
 
-## Optional: Temporäre Arbeitsumgebung
+For this tutorial, we need a Linux environment and the OpenStack client.
 
-Für dieses Tutorial benötigen wir eine Linux-Umgebung mit OpenStack Client. Sollte diese noch nicht vorhanden sein, kann sie mit folgenden Kommandos erstellt werden:
+If you do not have that yet, you can create it with the following commands:
 
 ```
 wget https://raw.githubusercontent.com/syseleven/heattemplates-examples/master/gettingStarted/sysElevenStackKickstart.yaml
@@ -23,26 +24,28 @@ wget https://raw.githubusercontent.com/syseleven/heattemplates-examples/master/g
 $ openstack stack create -t sysElevenStackKickstart.yaml --parameter key_name=<ssh key name> <stack name> --wait
 ...
 $ ssh syseleven@<server-ip>
+
+# enter your credentials
 $ vi openrc
 ```
 
-## Erstellen eines Snapshots der defekten Instanz
+## Create a snapshot
 
-Um die Daten herunterladen zu können muss ein Snapshot erstellt werden.
+To recover data from an existing instance, we have to create a snapshot first.
 
-Achtung: Der betroffene Server wird für wenige Minuten angehalten.
+Attention: The server will be unavailable for a few minutes.
 
 ```
 $ openstack server image create <server uuid> --name <snapshot name> --wait
 ```
 
-Nun kann der Snapshot heruntergeladen werden. Dies kann eine Weile dauern.
+We can download the snapshot now. This can take a while.
 
 ```
 $ openstack image save --file snapshot.qcow2 <snapshot name>
 ```
 
-Auf das Dateisystem kann nun mit einem block device zugegriffen werden:
+We can access the snapshot's contents via nbd.
 
 ```
 $ sudo apt-get install -y qemu-utils
@@ -50,7 +53,7 @@ $ sudo modprobe nbd
 $ sudo qemu-nbd --connect /dev/nbd0 snapshot.qcow2
 ```
 
-Nun können die verfügbaren Partitionen angezeigt werden.
+Let's list the partitions.
 
 ```
 $ sudo fdisk -l /dev/nbd0
@@ -65,20 +68,18 @@ Device      Boot Start       End   Sectors Size Id Type
 /dev/nbd0p1 *     2048 104857566 104855519  50G 83 Linux
 ```
 
-Mit fsck können etwaige Fehler erkannt und repariert werden.
+To repair the filesystem, use fsck.
 
 ```
-# Mit der Option -y wird ohne Rückfrage repariert.
+# Using the option -y, fsck will repair without asking.
 $ sudo fsck -f /dev/nbd0p1
 [...]
 ```
 
-Jetzt kann das Dateisystem eingehängt werden.
+Now we can mount the filesystem.
 
 ```
 $ sudo mount /dev/nbd0p1 /mnt/
 ```
 
-## Conclusio: was haben wir erreicht?
-
-Die Daten sind nun zugreifbar. Bei ext-Dateisystemen sollte ein Blick in `/mnt/lost+found` geworfen werden.
+Now the data is accessible on `/mnt/`. If it's an ext filesystem you should have a look in `/mnt/lost+found`.

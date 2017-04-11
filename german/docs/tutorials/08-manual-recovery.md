@@ -12,7 +12,6 @@
 * Der Umgang mit einfachen Heat-Templates, wie [in den ersten Schritten](01-firststeps/) gezeigt, wird vorausgesetzt.
 * Grundlagen zur Bedienung des OpenStack CLI (Umgebungsvariablen gesetzt, wie im [Kickstart-Tutorial](02-kickstart/) beschrieben.
 
-
 ## Optional: Temporäre Arbeitsumgebung
 
 Für dieses Tutorial benötigen wir eine Linux-Umgebung mit OpenStack Client. Sollte diese noch nicht vorhanden sein, kann sie mit folgenden Kommandos erstellt werden:
@@ -23,6 +22,8 @@ wget https://raw.githubusercontent.com/syseleven/heattemplates-examples/master/g
 $ openstack stack create -t sysElevenStackKickstart.yaml --parameter key_name=<ssh key name> <stack name> --wait
 ...
 $ ssh syseleven@<server-ip>
+
+# Zugangsdaten eintragen
 $ vi openrc
 ```
 
@@ -42,7 +43,7 @@ Nun kann der Snapshot heruntergeladen werden. Dies kann eine Weile dauern.
 $ openstack image save --file snapshot.qcow2 <snapshot name>
 ```
 
-Auf das Dateisystem kann nun mit einem block device zugegriffen werden:
+Auf das Dateisystem kann nun mit nbd:
 
 ```
 $ sudo apt-get install -y qemu-utils
@@ -79,6 +80,4 @@ Jetzt kann das Dateisystem eingehängt werden.
 $ sudo mount /dev/nbd0p1 /mnt/
 ```
 
-## Conclusio: was haben wir erreicht?
-
-Die Daten sind nun zugreifbar. Bei ext-Dateisystemen sollte ein Blick in `/mnt/lost+found` geworfen werden.
+Die Daten sind nun zugreifbar unter `/mnt/`. Bei ext-Dateisystemen sollte ein Blick in `/mnt/lost+found` geworfen werden.
